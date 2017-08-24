@@ -1,0 +1,53 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.0"
+    defaultConfig {
+        applicationId "com.veryworks.iyeongjun.seoulssul"
+        minSdkVersion 19
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:23.+'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.github.bumptech.glide:glide:3.7.0'       // 글라이드
+    compile 'jp.wasabeef:glide-transformations:1.0.6@aar' //글라이드 트랜스폼
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'       //레트로핏
+//    complie 'com.squareup.retrofit2:converter-gson'       //Gson 컨버터
+//    compile 'com.google.code.gson:gson:2.+'               //Gson
+    compile 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    testCompile 'junit:junit:4.12'
+
+}
+dependencies {
+    // Google Play Services
+    compile 'com.google.android.gms:play-services:10.0.1'
+
+    // Support Libraries
+//    compile 'com.android.support:appcompat-v7:25.1.1'
+
+
+     // Note: these libraries require the "Google Repository" and "Android Repository"
+    //       to be installed via the SDK manager.
+
+    }
+    dependencies {
+        compile 'com.lorentzos.swipecards:library:1.0.9@aar'
+    }
