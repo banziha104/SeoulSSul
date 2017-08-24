@@ -27,9 +27,9 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.github.bumptech.glide:glide:3.7.0'       // 글라이드
     compile 'jp.wasabeef:glide-transformations:1.0.6@aar' //글라이드 트랜스폼
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'       //레트로핏
-//    complie 'com.squareup.retrofit2:converter-gson'       //Gson 컨버터
-//    compile 'com.google.code.gson:gson:2.+'               //Gson
+    compile 'com.squareup.retrofit2:retrofit:2.3.+'       //레트로핏
+    compile 'com.squareup.retrofit2:converter-gson:2.3.+'       //Gson 컨버터
+    compile 'com.google.code.gson:gson:2.+'               //Gson
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
