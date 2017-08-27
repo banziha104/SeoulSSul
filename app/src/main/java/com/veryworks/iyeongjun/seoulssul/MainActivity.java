@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import com.veryworks.iyeongjun.seoulssul.Domain.Data;
+import com.veryworks.iyeongjun.seoulssul.Domain.SeoulData;
+import com.veryworks.iyeongjun.seoulssul.Domain.SeoulDataReceiver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        SeoulDataReceiver receiver = new SeoulDataReceiver(this);
+        receiver.getSeoulData();
         //add the view via xml or programmatically
         flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
 
@@ -72,9 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 // 어댑터가 빈다면 어떻게 할것인가
                 // 여기를 바꿔줘야하넹
                 Data data = new Data();
-                data.setText("asd");
-                data.setImageUrl(Uri.parse("http://file.lotoco01.cafe24.com/Product/Images/34/SFSELFAA0034073/Editor/7941630734e3a70cf0478f.JPG"));
-                datas.add(data);
+                 datas.add(data);
 
                 adapter.notifyDataSetChanged();
 
@@ -102,8 +104,6 @@ public class MainActivity extends AppCompatActivity {
     private void dataLoader() {
 
         Data data = new Data();
-        data.setImageUrl(Uri.parse("http://cfile240.uf.daum.net/image/2038F33A4E16CB3F0E69D7"));
-        data.setText("qwe");
         datas.add(data);
 
     }
