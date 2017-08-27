@@ -10,17 +10,30 @@ android:layout_gravity="center">
     android:id="@+id/imageView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:srcCompat="@drawable/cast_ic_notification_pause" />
+    app:srcCompat="@drawable/cast_ic_notification_pause"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentStart="true" />
 
     <TextView
-        android:id="@+id/helloText"
+        android:id="@+id/txtContents"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:textColor="@color/wallet_bright_foreground_holo_light"
-        android:textSize="40sp"
+        android:layout_height="450dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/txtTitle"
+        android:gravity="left|center_vertical"
+        android:scrollbars="vertical"
+        android:text="do not a"
+        android:textColor="@color/common_google_signin_btn_text_dark_pressed"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:gravity="center_vertical|center_horizontal"
+        android:text="TextView" />
 
 </RelativeLayout>
 

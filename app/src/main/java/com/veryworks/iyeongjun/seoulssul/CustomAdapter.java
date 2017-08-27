@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 import com.veryworks.iyeongjun.seoulssul.Domain.Data;
+import com.veryworks.iyeongjun.seoulssul.Domain.Row;
+import com.veryworks.iyeongjun.seoulssul.Domain.ShuffledData;
 
 import java.util.List;
 
@@ -17,33 +19,25 @@ import java.util.List;
  * Created by myPC on 2017-03-22.
  */
 
-public class CustomAdapter extends ArrayAdapter<Data> {
+public class CustomAdapter extends ArrayAdapter<ShuffledData>{
+    public CustomAdapter(@NonNull Context context, @LayoutRes int resource) {
+        super(context, resource);
+    }
 
-    private Context context;
-    List<Data> datas;
+    @Override
+    public int getCount() {
+        return super.getCount();
+    }
 
-//    public CustomAdapter(Context context, List datas) {
-//        this.datas = datas;
-//        this.context = context;
-//        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//    }
-
-
-    public CustomAdapter(@NonNull Context context, @LayoutRes int resource, @IdRes int textViewResourceId, @NonNull List<Data> objects) {
-        super(context, resource, textViewResourceId, objects);
-        datas = objects;
-        this.context = context;
-
+    @Nullable
+    @Override
+    public ShuffledData getItem(int position) {
+        return super.getItem(position);
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View myView =  super.getView(position, convertView, parent);
-
-        Data data = datas.get(position);
-
-
-        return myView;
+        return super.getView(position, convertView, parent);
     }
 }

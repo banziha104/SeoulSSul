@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import com.veryworks.iyeongjun.seoulssul.Domain.Data;
+import com.veryworks.iyeongjun.seoulssul.Domain.Row;
 import com.veryworks.iyeongjun.seoulssul.Domain.SeoulData;
 import com.veryworks.iyeongjun.seoulssul.Domain.SeoulDataReceiver;
 
@@ -40,11 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         //choose your favorite adapter
         adapter = new CustomAdapter(this, R.layout.item, R.id.helloText ,datas);
-        //arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.helloText, al );
 
-
-//            flingContainer.setAdapter(arrayAdapter);
-        //set the listener and the adapter
         flingContainer.setAdapter(adapter);
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
@@ -106,5 +103,13 @@ public class MainActivity extends AppCompatActivity {
         Data data = new Data();
         datas.add(data);
 
+    }
+    private String mergeSeoulData(Row row){
+        return  "장르 : " + row.getCODENAME() + "\n" +
+                "일시 : " + row.getSTRTDATE() + "\n" +             // 일시 : 2017 - 08 - 17
+                "장소 : " + row.getGCODE() + " " + row.getPLACE()  + "\n" + // 장소 : 마포구 프리즘홀
+                "주최 : " + row.getSPONSOR() + "\n" +
+                "주관 및 후원 : " + row.getSUPPORT() + "\n" +
+                "자세한 정보 : " + " " + row.getORG_LINK();
     }
 }

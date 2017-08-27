@@ -21,6 +21,9 @@ import retrofit2.http.Path;
  * Created by iyeongjun on 2017. 8. 24..
  */
 
+/**
+ * 서울 데이터 크롤링
+ */
 public class SeoulDataReceiver {
     //http://openAPI.seoul.go.kr:8088/6d59646256646c6431303073497a5353/json/SearchConcertDetailService/1/5/
     Retrofit retrofit;
