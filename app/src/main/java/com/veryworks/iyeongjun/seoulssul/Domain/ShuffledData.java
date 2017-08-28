@@ -39,6 +39,7 @@ public class ShuffledData {
                 "주관 및 후원 : " + row.getSUPPORT() + "\n" +
                 "자세한 정보 : " + " " + row.getORG_LINK();
     }
+
     public void getShuffledData(Row[] row){
         for (int i = 0 ; i < row.length ; i++){
             convertRowToShuffled(row,i);
