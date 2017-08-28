@@ -37,11 +37,6 @@ public class MainActivity extends AppCompatActivity {
         dataLoad();
     }
 
-    private void dataLoader() {
-
-        Data data = new Data();
-        datas.add(data);
-    }
     private void dataLoad(){
         new AsyncTask<String,Integer,Boolean>(){
             @Override
@@ -65,10 +60,6 @@ public class MainActivity extends AppCompatActivity {
         //add the view via xml or programmatically
         flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
 
-        datas = new ArrayList<>();
-//            al = new ArrayList<>();
-        dataLoader();
-
         //choose your favorite adapter
         adapter = new CustomAdapter(this, R.layout.item);
 
@@ -87,15 +78,11 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onLeftCardExit(Object dataObject) {
-                //Do something on the left!
-                //You also have access to the original object.
-                //If you want to use it just cast it (String) dataObject
-                Toast.makeText(MainActivity.this, "Left!", Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
             public void onRightCardExit(Object dataObject) {
-                Toast.makeText(MainActivity.this, "Right!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
