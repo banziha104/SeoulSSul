@@ -1,6 +1,7 @@
 package com.veryworks.iyeongjun.seoulssul;
 
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import com.veryworks.iyeongjun.seoulssul.Domain.Data;
 import com.veryworks.iyeongjun.seoulssul.Domain.Row;
 import com.veryworks.iyeongjun.seoulssul.Domain.SeoulData;
 import com.veryworks.iyeongjun.seoulssul.Domain.SeoulDataReceiver;
+import com.veryworks.iyeongjun.seoulssul.Domain.ShuffledData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         SeoulDataReceiver receiver = new SeoulDataReceiver(this);
         receiver.getSeoulData();
+        ShuffledData shuffleData = new ShuffledData();
         //add the view via xml or programmatically
         flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
 
@@ -40,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         dataLoader();
 
         //choose your favorite adapter
-        adapter = new CustomAdapter(this, R.layout.item, R.id.helloText ,datas);
+        adapter = new CustomAdapter(this, R.layout.item);
 
         flingContainer.setAdapter(adapter);
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
@@ -102,14 +105,9 @@ public class MainActivity extends AppCompatActivity {
 
         Data data = new Data();
         datas.add(data);
+    }
+    private void dataLoad(){
 
     }
-    private String mergeSeoulData(Row row){
-        return  "장르 : " + row.getCODENAME() + "\n" +
-                "일시 : " + row.getSTRTDATE() + "\n" +             // 일시 : 2017 - 08 - 17
-                "장소 : " + row.getGCODE() + " " + row.getPLACE()  + "\n" + // 장소 : 마포구 프리즘홀
-                "주최 : " + row.getSPONSOR() + "\n" +
-                "주관 및 후원 : " + row.getSUPPORT() + "\n" +
-                "자세한 정보 : " + " " + row.getORG_LINK();
-    }
+
 }

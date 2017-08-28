@@ -20,19 +20,26 @@ import java.util.List;
  */
 
 public class CustomAdapter extends ArrayAdapter<ShuffledData>{
+    public ShuffledData datas;
+
     public CustomAdapter(@NonNull Context context, @LayoutRes int resource) {
         super(context, resource);
     }
 
     @Override
     public int getCount() {
-        return super.getCount();
+        return 1;
     }
 
     @Nullable
     @Override
     public ShuffledData getItem(int position) {
         return super.getItem(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return super.getItemId(position);
     }
 
     @NonNull

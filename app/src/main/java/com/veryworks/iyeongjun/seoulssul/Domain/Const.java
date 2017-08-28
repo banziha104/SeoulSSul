@@ -9,6 +9,10 @@ package com.veryworks.iyeongjun.seoulssul.Domain;
  */
 public class Const {
     public static class Key{
-        public static String SEOUL_API_KEY = "6d59646256646c6431303073497a5353";
+        public static final String SEOUL_API_KEY = "6d59646256646c6431303073497a5353";
+    }
+    public static class DataType{
+        public static final boolean SEOUL_DATA = true;
+        public static final boolean USER_DATA = false;
     }
 }
