@@ -4,6 +4,7 @@ package com.veryworks.iyeongjun.seoulssul.Domain;
  * Created by iyeongjun on 2017. 8. 27..
  */
 
+import android.content.Context;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -12,6 +13,8 @@ import java.util.ArrayList;
  * 유저 데이터와 서울시 데이터를 섞음
  */
 public class ShuffledData {
+    Context context;
+    Row[] row;
     // 공통
     private String title = null;
     private String contents = null;
@@ -22,17 +25,7 @@ public class ShuffledData {
     private String gcode = null;    //지역
 
     public ShuffledData() {
-        for (int i = 0 ; i < Data.rows.length ; i ++){
-            convertRowToShuffled(Data.rows,i);
-        }
     }
-
-    public ShuffledData(Row[] row, FirebaseData firebaseData) {
-        for (int i = 0 ; i < Data.rows.length ; i ++){
-            convertRowToShuffled(Data.rows,i);
-        }
-    }
-
     /**
      *
      * @param row
@@ -46,7 +39,12 @@ public class ShuffledData {
                 "주관 및 후원 : " + row.getSUPPORT() + "\n" +
                 "자세한 정보 : " + " " + row.getORG_LINK();
     }
-
+    public void getShuffledData(Row[] row){
+        for (int i = 0 ; i < row.length ; i++){
+            convertRowToShuffled(row,i);
+            Log.d("Shuffled",Data.shuffledData.get(i).getTitle());
+        }
+    }
     /**
      * 서울 데이터를 셔플데이터로 변환
      * @param row
@@ -61,7 +59,6 @@ public class ShuffledData {
         data.setOrg_link(row[index].getORG_LINK());
         data.setContents(mergeSeoulData(row[index]));
         Data.shuffledData.add(data);
-        Log.d("Data",Data.shuffledData.get(index).getTitle());
     }
 
     public String getTitle() {

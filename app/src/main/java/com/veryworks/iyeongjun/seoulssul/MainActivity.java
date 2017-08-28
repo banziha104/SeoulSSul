@@ -2,6 +2,7 @@ package com.veryworks.iyeongjun.seoulssul;
 
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.annotation.IntegerRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
+    SeoulDataReceiver receiver = new SeoulDataReceiver(this);
     List<Data> datas;
     CustomAdapter adapter;
     SwipeFlingAdapterView flingContainer;
@@ -32,9 +33,35 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SeoulDataReceiver receiver = new SeoulDataReceiver(this);
         receiver.getSeoulData();
-        ShuffledData shuffleData = new ShuffledData();
+        dataLoad();
+    }
+
+    private void dataLoader() {
+
+        Data data = new Data();
+        datas.add(data);
+    }
+    private void dataLoad(){
+        new AsyncTask<String,Integer,Boolean>(){
+            @Override
+            protected Boolean doInBackground(String... strings) {
+                return null;
+            }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(Boolean aBoolean) {
+                super.onPostExecute(aBoolean);
+            }
+        }.execute();
+    }
+
+    private void addAdapter(){
         //add the view via xml or programmatically
         flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
 
@@ -76,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                 // 어댑터가 빈다면 어떻게 할것인가
                 // 여기를 바꿔줘야하넹
                 Data data = new Data();
-                 datas.add(data);
+                datas.add(data);
 
                 adapter.notifyDataSetChanged();
 
@@ -100,14 +127,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-    private void dataLoader() {
-
-        Data data = new Data();
-        datas.add(data);
-    }
-    private void dataLoad(){
-
-    }
-
 }
