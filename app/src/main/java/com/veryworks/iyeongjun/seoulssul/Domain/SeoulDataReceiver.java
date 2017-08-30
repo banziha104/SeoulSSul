@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.veryworks.iyeongjun.seoulssul.AdapterCallback;
+
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -30,10 +32,12 @@ public class SeoulDataReceiver {
     Retrofit retrofit;
     Context context;
     Row[] row = null;
+    AdapterCallback adapterCallback;
     int start = 1;
     int end = 100;
     public SeoulDataReceiver(Context context) {
         this.context = context;
+        adapterCallback = (AdapterCallback)context;
     }
 
     /**
@@ -57,6 +61,8 @@ public class SeoulDataReceiver {
             public void onResponse(Call<SeoulData> call, Response<SeoulData> response) {
                 ShuffledData shuffledData = new ShuffledData();
                 shuffledData.getShuffledData(response.body().getSearchConcertDetailService().getRow());
+
+                adapterCallback.callback(shuffledData); //어뎁터 콜백 인터페이스
             }
             @Override
             public void onFailure(Call<SeoulData> call, Throwable t) {
@@ -77,4 +83,7 @@ public class SeoulDataReceiver {
                                      @Path("START") int start,
                                      @Path("END") int end);
     }
+    /**
+     * 어뎁터 연결용 인터페이스
+     */
 }

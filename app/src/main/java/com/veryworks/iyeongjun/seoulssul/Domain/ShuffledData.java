@@ -24,6 +24,8 @@ public class ShuffledData {
     private String image = null;    // 이미지 주소
     private String gcode = null;    //지역
 
+    //Firebase
+
     public ShuffledData() {
     }
     /**

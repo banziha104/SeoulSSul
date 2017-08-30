@@ -10,15 +10,12 @@ import android.widget.Toast;
 
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import com.veryworks.iyeongjun.seoulssul.Domain.Data;
-import com.veryworks.iyeongjun.seoulssul.Domain.Row;
-import com.veryworks.iyeongjun.seoulssul.Domain.SeoulData;
 import com.veryworks.iyeongjun.seoulssul.Domain.SeoulDataReceiver;
 import com.veryworks.iyeongjun.seoulssul.Domain.ShuffledData;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterCallback {
     SeoulDataReceiver receiver = new SeoulDataReceiver(this);
     List<Data> datas;
     CustomAdapter adapter;
@@ -114,4 +111,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void callback(ShuffledData data) {
+
+    }
+
 }
