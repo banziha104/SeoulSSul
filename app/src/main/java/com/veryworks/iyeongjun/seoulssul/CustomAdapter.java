@@ -34,30 +34,54 @@ import butterknife.ButterKnife;
 public class CustomAdapter extends ArrayAdapter<ShuffledData>{
     List<ShuffledData> datas;
     Context context;
-
+    LayoutInflater inflater;
     public CustomAdapter(@NonNull Context context, @LayoutRes int resource, @IdRes int textViewResource,@NonNull List<ShuffledData> objects) {
-        super(context, resource, objects);
+        super(context, resource, textViewResource, objects);
         datas = objects;
         for(int i = 0 ; i < datas.size() ; i++){
             Log.d("Adapter",datas.get(i).getContents());
         }
         this.context = context;
+        this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView,  @NonNull ViewGroup parent) {
-        View view= super.getView(position, convertView, parent);
+        Holder holder;
+        if(convertView == null){
+            convertView = inflater.inflate(R.layout.item,null);
+            holder = new Holder(convertView,context);
+            convertView.setTag(holder);
+        }else {
+            holder = (Holder) convertView.getTag();
+        }
         ShuffledData data = datas.get(position);
-        TextView txtTitle = view.findViewById(R.id.txtTitle);
-        TextView txtContents =  view.findViewById(R.id.txtContents);
-        ImageView imageView =  view.findViewById(R.id.imageView);
+        holder.setTxtTitle(data.getTitle());
+        holder.setTxtContents(data.getContents());
+        holder.setImageView(data.getImage());
 
-        txtTitle.setText(data.getTitle());
-        txtContents.setText(data.getContents());
-        Glide.with(context).load(data.getImage()).into(imageView);
-        return view;
+        return convertView;
+    }
+    class Holder{
+            int postion;
+            @BindView(R.id.txtContents) TextView txtContents;
+            @BindView(R.id.txtTitle)    TextView txtTitle;
+            @BindView(R.id.imageView)   ImageView imageView;
+
+        public Holder(View view, Context context) {
+            ButterKnife.bind(this,view);
+        }
+        public void setTxtTitle(String str){
+            txtTitle.setText(str);
+        }
+        public void setTxtContents(String str){
+            txtContents.setText(str);
+        }
+        public void setImageView(String url){
+            Glide.with(context).load(url).into(imageView);
+        }
     }
     //    ArrayList<ShuffledData> datas;
 //    LayoutInflater inflater;

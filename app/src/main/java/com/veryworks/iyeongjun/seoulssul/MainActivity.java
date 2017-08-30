@@ -21,16 +21,12 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
     List<ShuffledData> tempData;
     CustomAdapter adapter;
 
-    @BindView(R.id.frame)
     SwipeFlingAdapterView flingContainer;
-    @BindView(R.id.button2)
-    Button button2;
-    @BindView(R.id.button3)
-    Button button3;
-    @BindView(R.id.button4)
-    Button button4;
-    @BindView(R.id.button5)
-    Button button5;
+
+    @BindView(R.id.button2) Button button2;
+    @BindView(R.id.button3) Button button3;
+    @BindView(R.id.button4) Button button4;
+    @BindView(R.id.button5) Button button5;
 
 //    private ArrayList<String> al;
 //    private ArrayAdapter<String> arrayAdapter;
@@ -42,8 +38,10 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
         tempData = new ArrayList<>();
         receiver.getSeoulData();
+
     }
 
 
@@ -53,8 +51,10 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
         //choose your favorite adapter
         adapter = new CustomAdapter(this, R.layout.item, R.id.txtContents,tempData);
 
+        for(int i = 0 ; i < tempData.size() ; i++){
+            Log.d("tempData",tempData.get(i).getImage());
+        }
         flingContainer.setAdapter(adapter);
-
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
             public void removeFirstObjectInAdapter() {
@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
                 // 어댑터가 빈다면 어떻게 할것인가
                 // 여기를 바꿔줘야하넹
+                Log.d("Empty","Empty");
                 ShuffledData data = new ShuffledData();
                 data.setTitle("빔");
                 data.setContents("끝");
@@ -98,8 +99,10 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
 
             @Override
             public void onScroll(float scrollProgressPercent) {
+
             }
         });
+        Log.d("End","End");
         // Optionally add an OnItemClickListener
         flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
             @Override
@@ -107,6 +110,12 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
                 Toast.makeText(MainActivity.this, "Clicked!", Toast.LENGTH_SHORT).show();
             }
         });
+        try {
+            Thread.sleep(5000);
+            adapter.notifyDataSetChanged();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }

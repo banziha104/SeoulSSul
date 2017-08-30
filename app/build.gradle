@@ -43,11 +43,13 @@ dependencies {
     // Support Libraries
 //    compile 'com.android.support:appcompat-v7:25.1.1'
 
-
-     // Note: these libraries require the "Google Repository" and "Android Repository"
+    // Note: these libraries require the "Google Repository" and "Android Repository"
     //       to be installed via the SDK manager.
 
-    }
-    dependencies {
-        compile 'com.lorentzos.swipecards:library:1.0.9@aar'
-    }
+}
+dependencies {
+    compile 'com.android.support.constraint:constraint-layout:+'
+}
+dependencies {
+    compile 'com.lorentzos.swipecards:library:1.0.9@aar'
+}
