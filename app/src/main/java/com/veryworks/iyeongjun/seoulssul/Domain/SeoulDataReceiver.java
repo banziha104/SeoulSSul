@@ -3,6 +3,7 @@ package com.veryworks.iyeongjun.seoulssul.Domain;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.veryworks.iyeongjun.seoulssul.AdapterCallback;
@@ -10,6 +11,7 @@ import com.veryworks.iyeongjun.seoulssul.AdapterCallback;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import okhttp3.ResponseBody;
 import retrofit2.Callback;
@@ -59,10 +61,14 @@ public class SeoulDataReceiver {
           result.enqueue(new Callback<SeoulData>() {
             @Override
             public void onResponse(Call<SeoulData> call, Response<SeoulData> response) {
-                ShuffledData shuffledData = new ShuffledData();
-                shuffledData.getShuffledData(response.body().getSearchConcertDetailService().getRow());
-
-                adapterCallback.callback(shuffledData); //어뎁터 콜백 인터페이스
+                ArrayList<ShuffledData> datas;
+                ShuffledData data = new ShuffledData();
+                data.getShuffledData(response.body().getSearchConcertDetailService().getRow());
+                datas = Data.shuffledData;
+                for(int i = 0 ; i < datas.size() ; i++){
+                    Log.d("Receiever",datas.get(i).getTitle());
+                }
+                adapterCallback.callback(datas); //어뎁터 콜백 인터페이스
             }
             @Override
             public void onFailure(Call<SeoulData> call, Throwable t) {
@@ -83,7 +89,6 @@ public class SeoulDataReceiver {
                                      @Path("START") int start,
                                      @Path("END") int end);
     }
-    /**
-     * 어뎁터 연결용 인터페이스
-     */
+
+
 }

@@ -1,25 +1,36 @@
 package com.veryworks.iyeongjun.seoulssul;
 
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.support.annotation.IntegerRes;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
-import com.veryworks.iyeongjun.seoulssul.Domain.Data;
 import com.veryworks.iyeongjun.seoulssul.Domain.SeoulDataReceiver;
 import com.veryworks.iyeongjun.seoulssul.Domain.ShuffledData;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements AdapterCallback {
     SeoulDataReceiver receiver = new SeoulDataReceiver(this);
-    List<Data> datas;
+    List<ShuffledData> tempData;
     CustomAdapter adapter;
+
+    @BindView(R.id.frame)
     SwipeFlingAdapterView flingContainer;
+    @BindView(R.id.button2)
+    Button button2;
+    @BindView(R.id.button3)
+    Button button3;
+    @BindView(R.id.button4)
+    Button button4;
+    @BindView(R.id.button5)
+    Button button5;
 
 //    private ArrayList<String> al;
 //    private ArrayAdapter<String> arrayAdapter;
@@ -30,43 +41,26 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+        tempData = new ArrayList<>();
         receiver.getSeoulData();
-        dataLoad();
     }
 
-    private void dataLoad(){
-        new AsyncTask<String,Integer,Boolean>(){
-            @Override
-            protected Boolean doInBackground(String... strings) {
-                return null;
-            }
 
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-            }
-
-            @Override
-            protected void onPostExecute(Boolean aBoolean) {
-                super.onPostExecute(aBoolean);
-            }
-        }.execute();
-    }
-
-    private void addAdapter(){
-        //add the view via xml or programmatically
-        flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
-
+    @Override
+    public void callback(ArrayList<ShuffledData> datas) {
+        tempData = datas;
         //choose your favorite adapter
-        adapter = new CustomAdapter(this, R.layout.item);
+        adapter = new CustomAdapter(this, R.layout.item, R.id.txtContents,tempData);
 
         flingContainer.setAdapter(adapter);
+
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
             public void removeFirstObjectInAdapter() {
                 // this is the simplest way to delete an object from the Adapter (/AdapterView)
                 Log.d("LIST", "removed object!");
-                datas.remove(0);
+                tempData.remove(0);
                 adapter.notifyDataSetChanged();
 
 //                    al.remove(0);
@@ -75,20 +69,24 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
 
             @Override
             public void onLeftCardExit(Object dataObject) {
+                Toast.makeText(MainActivity.this, "Left!", Toast.LENGTH_SHORT).show();
 
             }
 
             @Override
             public void onRightCardExit(Object dataObject) {
+                Toast.makeText(MainActivity.this, "Right!", Toast.LENGTH_SHORT).show();
             }
+
 
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
                 // 어댑터가 빈다면 어떻게 할것인가
                 // 여기를 바꿔줘야하넹
-                Data data = new Data();
-                datas.add(data);
-
+                ShuffledData data = new ShuffledData();
+                data.setTitle("빔");
+                data.setContents("끝");
+                tempData.add(data);
                 adapter.notifyDataSetChanged();
 
 //                    al.add("XML ".concat(String.valueOf(i)));
@@ -102,7 +100,6 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
             public void onScroll(float scrollProgressPercent) {
             }
         });
-
         // Optionally add an OnItemClickListener
         flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
             @Override
@@ -110,11 +107,6 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
                 Toast.makeText(MainActivity.this, "Clicked!", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    @Override
-    public void callback(ShuffledData data) {
-
     }
 
 }

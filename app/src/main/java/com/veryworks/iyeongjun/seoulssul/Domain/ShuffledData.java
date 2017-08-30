@@ -23,7 +23,7 @@ public class ShuffledData {
     private String org_link = null; // 원문 링크
     private String image = null;    // 이미지 주소
     private String gcode = null;    //지역
-
+    private boolean isSeoulData;
     //Firebase
 
     public ShuffledData() {
@@ -61,6 +61,7 @@ public class ShuffledData {
         data.setImage(row[index].getMAIN_IMG());
         data.setOrg_link(row[index].getORG_LINK());
         data.setContents(mergeSeoulData(row[index]));
+        data.setSeoulData(true);
         Data.shuffledData.add(data);
     }
 
@@ -102,5 +103,13 @@ public class ShuffledData {
 
     public void setGcode(String gcode) {
         this.gcode = gcode;
+    }
+
+    public boolean isSeoulData() {
+        return isSeoulData;
+    }
+
+    public void setSeoulData(boolean seoulData) {
+        isSeoulData = seoulData;
     }
 }
