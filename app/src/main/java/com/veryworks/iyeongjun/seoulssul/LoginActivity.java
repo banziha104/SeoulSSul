@@ -52,7 +52,6 @@ public class LoginActivity extends AppCompatActivity {
     private void goMainWithFacebook(){
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
-
         LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this,
                 Arrays.asList("public_profile", "email"));
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {

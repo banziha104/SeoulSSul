@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import com.veryworks.iyeongjun.seoulssul.Domain.SeoulDataReceiver;
 import com.veryworks.iyeongjun.seoulssul.Domain.ShuffledData;
+import com.veryworks.iyeongjun.seoulssul.Util.PermissionControl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements AdapterCallback {
+public class MainActivity extends AppCompatActivity implements AdapterCallback, PermissionControl.CallBack{
     SeoulDataReceiver receiver = new SeoulDataReceiver(this);
     List<ShuffledData> tempData;
     CustomAdapter adapter;
@@ -44,6 +45,10 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
 
     }
 
+    @Override
+    public void init() {
+
+    }
 
     @Override
     public void callback(ArrayList<ShuffledData> datas) {
