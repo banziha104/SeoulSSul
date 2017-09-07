@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
     SeoulDataReceiver receiver = new SeoulDataReceiver(this);
     List<ShuffledData> tempData;
     CustomAdapter adapter;
-
+    int position = 0;
     SwipeFlingAdapterView flingContainer;
 
     @BindView(R.id.button2) Button button2;
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
 
             @Override
             public void onScroll(float scrollProgressPercent) {
-
+                Toast.makeText(MainActivity.this, "OnScroll", Toast.LENGTH_SHORT).show();
             }
         });
         Log.d("End","End");
