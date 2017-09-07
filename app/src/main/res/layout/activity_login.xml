@@ -6,6 +6,11 @@
     android:layout_height="match_parent"
     tools:context="com.veryworks.iyeongjun.seoulssul.LoginActivity">
 
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/facebookLoginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <VideoView
         android:id="@+id/videoView"
         android:layout_width="598dp"
