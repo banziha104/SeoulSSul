@@ -17,7 +17,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements AdapterCallback, PermissionControl.CallBack{
+public class MainActivity extends AppCompatActivity implements AdapterCallback{
     SeoulDataReceiver receiver = new SeoulDataReceiver(this);
     List<ShuffledData> tempData;
     CustomAdapter adapter;
@@ -45,10 +45,7 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback, 
 
     }
 
-    @Override
-    public void init() {
 
-    }
 
     @Override
     public void callback(ArrayList<ShuffledData> datas) {

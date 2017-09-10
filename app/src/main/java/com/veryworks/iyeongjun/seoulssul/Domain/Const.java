@@ -18,4 +18,9 @@ public class Const {
     public static class Num{
         public static final int NEXT_PAGE = 100;
     }
+    public static class Guest{
+        public static final String GUEST_NAME = "GUEST";
+        public static final String GUEST_EMAIL = "guest@guest.com";
+        public static final String GUEST_PASSWORD = "id3dkgajkdl93910";
+    }
 }

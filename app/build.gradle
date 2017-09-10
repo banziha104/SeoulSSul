@@ -59,3 +59,10 @@ dependencies {
 dependencies {
     compile 'com.lorentzos.swipecards:library:1.0.9@aar'
 }
+dependencies {
+    compile 'com.google.firebase:firebase-database:10.0.1'
+}
+dependencies {
+    compile 'com.google.firebase:firebase-auth:10.0.1'
+}
+apply plugin: 'com.google.gms.google-services'

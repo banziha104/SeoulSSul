@@ -7,6 +7,7 @@ package com.veryworks.iyeongjun.seoulssul.Domain;
 public class UserData {
     private String name;
     private String image_url;
+    private Boolean isNextTime;
 
     public String getName() {
         return name;
@@ -22,5 +23,13 @@ public class UserData {
 
     public void setImage_url(String image_url) {
         this.image_url = image_url;
+    }
+
+    public Boolean getNextTime() {
+        return isNextTime;
+    }
+
+    public void setNextTime(Boolean nextTime) {
+        isNextTime = nextTime;
     }
 }
