@@ -1,6 +1,7 @@
 package com.veryworks.iyeongjun.seoulssul;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.media.Image;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
@@ -17,21 +18,26 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
+import com.veryworks.iyeongjun.seoulssul.Domain.Const;
 import com.veryworks.iyeongjun.seoulssul.Domain.Data;
 import com.veryworks.iyeongjun.seoulssul.Domain.Row;
 import com.veryworks.iyeongjun.seoulssul.Domain.ShuffledData;
+import com.veryworks.iyeongjun.seoulssul.Util.CustomBitmapPool;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
  * Created by myPC on 2017-03-22.
  */
 
 public class CustomAdapter extends ArrayAdapter<ShuffledData>{
+    int[] drawableResource = new int[Const.Num.IMG_LENGTH];
     List<ShuffledData> datas;
     Context context;
     LayoutInflater inflater;
@@ -43,45 +49,32 @@ public class CustomAdapter extends ArrayAdapter<ShuffledData>{
         }
         this.context = context;
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
+        for(int i = 0; i< Const.Num.IMG_LENGTH; i++){
+            String resName;
+            if(i<10) resName= "@drawable/img0"+i;
+            else resName= "@drawable/img"+i;
+            drawableResource[i] = context.getResources().getIdentifier(resName,"drawable",context.getPackageName());
+            Log.d("drwable",drawableResource[i]+"");
+        }
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView,  @NonNull ViewGroup parent) {
-        Holder holder;
-        if(convertView == null){
-            convertView = inflater.inflate(R.layout.item,null);
-            holder = new Holder(convertView,context);
-            convertView.setTag(holder);
-        }else {
-            holder = (Holder) convertView.getTag();
-        }
+        View view = super.getView(position,convertView,parent);
         ShuffledData data = datas.get(position);
-        holder.setTxtTitle(data.getTitle());
-        holder.setTxtContents(data.getContents());
-        holder.setImageView(data.getImage());
 
-        return convertView;
-    }
-    class Holder{
-            int postion;
-            @BindView(R.id.txtContents) TextView txtContents;
-            @BindView(R.id.txtTitle)    TextView txtTitle;
-            @BindView(R.id.imageView)   ImageView imageView;
+        TextView txtTitle = view.findViewById(R.id.txtTitle);
+        TextView txtContents = view.findViewById(R.id.txtContents);
+        ImageView imgFore = view.findViewById(R.id.imgFore);
+        ImageView imgBack = view.findViewById(R.id.imgBack);
 
-        public Holder(View view, Context context) {
-            ButterKnife.bind(this,view);
-        }
-        public void setTxtTitle(String str){
-            txtTitle.setText(str);
-        }
-        public void setTxtContents(String str){
-            txtContents.setText(str);
-        }
-        public void setImageView(String url){
-            Glide.with(context).load(url).into(imageView);
-        }
+        txtTitle.setText(data.getTitle());
+        txtContents.setText(data.getContents());
+        Glide.with(context).load(data.getImage())
+                .bitmapTransform(new CropCircleTransformation(new CustomBitmapPool()))
+                .into(imgFore);
+        return view;
     }
     //    ArrayList<ShuffledData> datas;
 //    LayoutInflater inflater;

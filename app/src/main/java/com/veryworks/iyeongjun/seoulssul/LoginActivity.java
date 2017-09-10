@@ -70,6 +70,7 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
     @Override
     public void init() {
         ButterKnife.bind(this);
+        mAuth = FirebaseAuth.getInstance();
         setVideoView();
     }
     /**
@@ -135,26 +136,9 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
      */
     @OnClick(R.id.btnNextTime)
     public void goMainWithNextTime(){
-        mAuth.signInWithEmailAndPassword(Const.Guest.GUEST_EMAIL, Const.Guest.GUEST_PASSWORD)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d("Firebase", "signInWithEmail:onComplete:" + task.isSuccessful());
-
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            Log.w("Firebase", "signInWithEmail:failed", task.getException());
-                            Toast.makeText(LoginActivity.this,"게스트로 시작합니다",
-                                    Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                            startActivity(intent);
-                        }
-
-                        // ...
-                    }
-                });
+        guestLogin(Const.Guest.GUEST_EMAIL,Const.Guest.GUEST_PASSWORD);
+        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+        startActivity(intent);
     }
 
     /**
@@ -186,5 +170,24 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
             }
         };
     }
+    private void guestLogin(String email,String password){
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d("Firebase", "signInWithEmail:onComplete:" + task.isSuccessful());
 
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Log.w("Firebase", "signInWithEmail:failed", task.getException());
+                            Toast.makeText(LoginActivity.this,"게스트로 시작합니다",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                        // ...
+                    }
+                });
+    }
 }

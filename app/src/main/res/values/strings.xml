@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">SeoulSSul</string>
-    <string name="facebook_app_id">857739101055950</string>
-    <string name="fb_login_protocol_scheme">fb857739101055950</string>
-
+    <string name="facebook_app_id">487874731592926</string>
+    <string name="fb_login_protocol_scheme">fb487874731592926</string>
 </resources>

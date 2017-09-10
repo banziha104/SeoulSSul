@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import com.veryworks.iyeongjun.seoulssul.Domain.SeoulDataReceiver;
 import com.veryworks.iyeongjun.seoulssul.Domain.ShuffledData;
@@ -16,12 +17,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class MainActivity extends AppCompatActivity implements AdapterCallback{
     SeoulDataReceiver receiver = new SeoulDataReceiver(this);
     List<ShuffledData> tempData;
     CustomAdapter adapter;
-    int position = 0;
+    int curPosition = 3;
     SwipeFlingAdapterView flingContainer;
 
     @BindView(R.id.button2) Button button2;
@@ -42,20 +44,18 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback{
         flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
         tempData = new ArrayList<>();
         receiver.getSeoulData();
-
     }
 
 
 
     @Override
     public void callback(ArrayList<ShuffledData> datas) {
-        tempData = datas;
+        for(int i = 0; i < curPosition ; i++){
+            tempData.add(datas.get(i));
+        }
+        final ArrayList<ShuffledData> storage = datas;
         //choose your favorite adapter
         adapter = new CustomAdapter(this, R.layout.item, R.id.txtContents,tempData);
-
-        for(int i = 0 ; i < tempData.size() ; i++){
-            Log.d("tempData",tempData.get(i).getImage());
-        }
         flingContainer.setAdapter(adapter);
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
@@ -72,12 +72,18 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback{
             @Override
             public void onLeftCardExit(Object dataObject) {
                 Toast.makeText(MainActivity.this, "Left!", Toast.LENGTH_SHORT).show();
-
+                curPosition++;
+                tempData.add(storage.get(curPosition));
+                Log.d("img",storage.get(curPosition).getImage());
+                adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onRightCardExit(Object dataObject) {
                 Toast.makeText(MainActivity.this, "Right!", Toast.LENGTH_SHORT).show();
+                curPosition++;
+                tempData.add(storage.get(curPosition));
+                adapter.notifyDataSetChanged();
             }
 
 
@@ -91,7 +97,6 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback{
                 data.setContents("끝");
                 tempData.add(data);
                 adapter.notifyDataSetChanged();
-
 //                    al.add("XML ".concat(String.valueOf(i)));
 //                    arrayAdapter.notifyDataSetChanged();
 //                    Log.d("LIST", "notified");
@@ -101,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback{
 
             @Override
             public void onScroll(float scrollProgressPercent) {
-                Toast.makeText(MainActivity.this, "OnScroll", Toast.LENGTH_SHORT).show();
+               Log.d("OnSroll", "Scroll");
             }
         });
         Log.d("End","End");
@@ -119,5 +124,6 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback{
             e.printStackTrace();
         }
     }
+
 
 }

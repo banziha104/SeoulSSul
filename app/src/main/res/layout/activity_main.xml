@@ -13,7 +13,8 @@
         android:text="Hello World!"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:layout_margin="0dp"/>
 
     <Button
         android:id="@+id/button2"

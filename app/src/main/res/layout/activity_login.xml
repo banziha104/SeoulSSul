@@ -80,7 +80,10 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.703"
         app:srcCompat="@drawable/kakao" />
-
+    <com.facebook.login.widget.LoginButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
     <ImageView
         android:id="@+id/imgLogo"
         android:layout_width="192dp"

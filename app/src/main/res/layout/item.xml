@@ -8,7 +8,7 @@
     android:layout_gravity="center">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imgBack"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
@@ -19,14 +19,14 @@
     <TextView
         android:id="@+id/txtContents"
         android:layout_width="match_parent"
-        android:layout_height="450dp"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/txtTitle"
+        android:layout_height="200dp"
         android:gravity="left|center_vertical"
         android:scrollbars="vertical"
         android:text="do not a"
         android:textColor="@color/common_google_signin_btn_text_dark_pressed"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:layout_below="@+id/imgFore"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/txtTitle"
@@ -36,6 +36,14 @@
         android:layout_alignParentTop="true"
         android:gravity="center_vertical|center_horizontal"
         android:text="TextView" />
+
+    <ImageView
+        android:id="@+id/imgFore"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:srcCompat="@drawable/cast_abc_scrubber_control_to_pressed_mtrl_005"
+        android:layout_below="@+id/txtTitle"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
 
