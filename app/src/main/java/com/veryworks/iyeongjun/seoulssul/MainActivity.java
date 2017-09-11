@@ -1,5 +1,6 @@
 package com.veryworks.iyeongjun.seoulssul;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -8,6 +9,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
+import com.tsengvn.typekit.Typekit;
+import com.tsengvn.typekit.TypekitContextWrapper;
 import com.veryworks.iyeongjun.seoulssul.Domain.SeoulDataReceiver;
 import com.veryworks.iyeongjun.seoulssul.Domain.ShuffledData;
 import com.veryworks.iyeongjun.seoulssul.Util.PermissionControl;
@@ -23,7 +26,8 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback{
     SeoulDataReceiver receiver = new SeoulDataReceiver(this);
     List<ShuffledData> tempData;
     CustomAdapter adapter;
-    int curPosition = 3;
+    int curPosition = 1;
+    boolean scrolledToggle = true;
     SwipeFlingAdapterView flingContainer;
 
     @BindView(R.id.button2) Button button2;
@@ -41,12 +45,16 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        Typekit.getInstance().addNormal(Typekit.createFromAsset(this,"amsfont.ttf"));
         flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
         tempData = new ArrayList<>();
         receiver.getSeoulData();
     }
 
-
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(TypekitContextWrapper.wrap(newBase));
+    }
 
     @Override
     public void callback(ArrayList<ShuffledData> datas) {
@@ -71,19 +79,12 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback{
 
             @Override
             public void onLeftCardExit(Object dataObject) {
-                Toast.makeText(MainActivity.this, "Left!", Toast.LENGTH_SHORT).show();
-                curPosition++;
-                tempData.add(storage.get(curPosition));
-                Log.d("img",storage.get(curPosition).getImage());
-                adapter.notifyDataSetChanged();
+                scrolledToggle = true;
             }
 
             @Override
             public void onRightCardExit(Object dataObject) {
-                Toast.makeText(MainActivity.this, "Right!", Toast.LENGTH_SHORT).show();
-                curPosition++;
-                tempData.add(storage.get(curPosition));
-                adapter.notifyDataSetChanged();
+                scrolledToggle = true;
             }
 
 
@@ -92,11 +93,7 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback{
                 // 어댑터가 빈다면 어떻게 할것인가
                 // 여기를 바꿔줘야하넹
                 Log.d("Empty","Empty");
-                ShuffledData data = new ShuffledData();
-                data.setTitle("빔");
-                data.setContents("끝");
-                tempData.add(data);
-                adapter.notifyDataSetChanged();
+
 //                    al.add("XML ".concat(String.valueOf(i)));
 //                    arrayAdapter.notifyDataSetChanged();
 //                    Log.d("LIST", "notified");
@@ -106,7 +103,12 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback{
 
             @Override
             public void onScroll(float scrollProgressPercent) {
-               Log.d("OnSroll", "Scroll");
+                if(scrolledToggle == true && scrollProgressPercent != 0f){
+                    curPosition++;
+                    tempData.add(storage.get(curPosition));
+                    adapter.notifyDataSetChanged();
+                    scrolledToggle = false;
+                }
             }
         });
         Log.d("End","End");
@@ -117,13 +119,7 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback{
                 Toast.makeText(MainActivity.this, "Clicked!", Toast.LENGTH_SHORT).show();
             }
         });
-        try {
-            Thread.sleep(5000);
-            adapter.notifyDataSetChanged();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        adapter.notifyDataSetChanged();
+
     }
-
-
 }

@@ -2,6 +2,7 @@ package com.veryworks.iyeongjun.seoulssul;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.media.Image;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
@@ -30,7 +31,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.glide.transformations.ColorFilterTransformation;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import jp.wasabeef.glide.transformations.GrayscaleTransformation;
 
 /**
  * Created by myPC on 2017-03-22.
@@ -38,6 +41,7 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class CustomAdapter extends ArrayAdapter<ShuffledData>{
     int[] drawableResource = new int[Const.Num.IMG_LENGTH];
+    int curPos = 0;
     List<ShuffledData> datas;
     Context context;
     LayoutInflater inflater;
@@ -69,11 +73,17 @@ public class CustomAdapter extends ArrayAdapter<ShuffledData>{
         ImageView imgFore = view.findViewById(R.id.imgFore);
         ImageView imgBack = view.findViewById(R.id.imgBack);
 
-        txtTitle.setText(data.getTitle());
-        txtContents.setText(data.getContents());
         Glide.with(context).load(data.getImage())
                 .bitmapTransform(new CropCircleTransformation(new CustomBitmapPool()))
                 .into(imgFore);
+
+        Glide.with(context).load(drawableResource[curPos % Const.Num.IMG_LENGTH])
+                .bitmapTransform(new ColorFilterTransformation(new CustomBitmapPool(), Color.argb(160, 0, 0, 0)))
+                .into(imgBack);
+
+        txtTitle.setText(data.getTitle());
+        txtContents.setText(data.getContents());
+        curPos++;
         return view;
     }
     //    ArrayList<ShuffledData> datas;
