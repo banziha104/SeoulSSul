@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import com.tsengvn.typekit.Typekit;
 import com.tsengvn.typekit.TypekitContextWrapper;
@@ -26,9 +28,14 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback{
     SeoulDataReceiver receiver = new SeoulDataReceiver(this);
     List<ShuffledData> tempData;
     CustomAdapter adapter;
+
     int curPosition = 1;
     boolean scrolledToggle = true;
+
     SwipeFlingAdapterView flingContainer;
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference("boardData");
 
     @BindView(R.id.button2) Button button2;
     @BindView(R.id.button3) Button button3;
@@ -122,4 +129,5 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback{
         adapter.notifyDataSetChanged();
 
     }
+    
 }

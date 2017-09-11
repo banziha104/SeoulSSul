@@ -1,4 +1,4 @@
-package com.veryworks.iyeongjun.seoulssul.model;
+package com.veryworks.iyeongjun.seoulssul.Domain;
 
 import android.location.Location;
 

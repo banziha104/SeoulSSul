@@ -23,9 +23,12 @@ public class ShuffledData {
     private String org_link = null; // 원문 링크
     private String image = null;    // 이미지 주소
     private String gcode = null;    //지역
-    private boolean isSeoulData;
-    //Firebase
 
+    //Firebase
+    private float locationLat = 0.0f;
+    private float locationLong = 0.0f;
+    private String section = null;
+    private boolean isFirebase;
     public ShuffledData() {
     }
     /**
@@ -61,7 +64,7 @@ public class ShuffledData {
         data.setImage(row[index].getMAIN_IMG());
         data.setOrg_link(row[index].getORG_LINK());
         data.setContents(mergeSeoulData(row[index]));
-        data.setSeoulData(true);
+        data.setFirebase(false);
         Data.shuffledData.add(data);
     }
 
@@ -105,11 +108,35 @@ public class ShuffledData {
         this.gcode = gcode;
     }
 
-    public boolean isSeoulData() {
-        return isSeoulData;
+    public float getLocationLat() {
+        return locationLat;
     }
 
-    public void setSeoulData(boolean seoulData) {
-        isSeoulData = seoulData;
+    public void setLocationLat(float locationLat) {
+        this.locationLat = locationLat;
+    }
+
+    public float getLocationLong() {
+        return locationLong;
+    }
+
+    public void setLocationLong(float locationLong) {
+        this.locationLong = locationLong;
+    }
+
+    public String getSection() {
+        return section;
+    }
+
+    public void setSection(String section) {
+        this.section = section;
+    }
+
+    public boolean isFirebase() {
+        return isFirebase;
+    }
+
+    public void setFirebase(boolean firebase) {
+        isFirebase = firebase;
     }
 }

@@ -9,11 +9,12 @@ import android.location.Location;
 import android.opengl.Matrix;
 import android.view.View;
 
+import com.veryworks.iyeongjun.seoulssul.Domain.ARPoint;
+import com.veryworks.iyeongjun.seoulssul.helper.LocationHelper;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import ng.dat.ar.helper.LocationHelper;
-import ng.dat.ar.model.ARPoint;
 
 /**
  * Created by ntdat on 1/13/17.
