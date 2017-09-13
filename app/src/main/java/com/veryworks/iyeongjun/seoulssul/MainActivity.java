@@ -1,6 +1,7 @@
 package com.veryworks.iyeongjun.seoulssul;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -22,6 +23,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class MainActivity extends AppCompatActivity implements AdapterCallback{
@@ -129,5 +131,9 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback{
         adapter.notifyDataSetChanged();
 
     }
-    
+    @OnClick(R.id.button4)
+    public void button4Clicked(){
+        Intent intent = new Intent(MainActivity.this, ARActivity.class);
+        startActivity(intent);
+    }
 }

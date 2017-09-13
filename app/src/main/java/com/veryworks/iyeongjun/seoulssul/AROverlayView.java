@@ -7,7 +7,9 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.location.Location;
 import android.opengl.Matrix;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.veryworks.iyeongjun.seoulssul.Domain.ARPoint;
 import com.veryworks.iyeongjun.seoulssul.helper.LocationHelper;
@@ -37,6 +39,8 @@ public class AROverlayView extends View {
         arPoints = new ArrayList<ARPoint>() {{
             add(new ARPoint("Sin sa", 37.516174, 127.019510, 0));
             add(new ARPoint("Jam won", 37.512635, 127.011279, 0));
+            add(new ARPoint("Ma",37.550030,127.302130,0));
+            Log.d("Ar","Location Create");
         }};
     }
 
@@ -83,5 +87,8 @@ public class AROverlayView extends View {
                         , y - 80, paint);
             }
         }
+    }
+    public void setFirebaseData(){
+
     }
 }
