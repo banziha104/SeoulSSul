@@ -9,11 +9,15 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import com.tsengvn.typekit.Typekit;
 import com.tsengvn.typekit.TypekitContextWrapper;
+import com.veryworks.iyeongjun.seoulssul.Domain.FirebaseData;
 import com.veryworks.iyeongjun.seoulssul.Domain.SeoulDataReceiver;
 import com.veryworks.iyeongjun.seoulssul.Domain.ShuffledData;
 import com.veryworks.iyeongjun.seoulssul.Util.PermissionControl;
@@ -54,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        writeFirebaseData();
         Typekit.getInstance().addNormal(Typekit.createFromAsset(this,"amsfont.ttf"));
         flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
         tempData = new ArrayList<>();
@@ -135,5 +140,10 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback{
     public void button4Clicked(){
         Intent intent = new Intent(MainActivity.this, ARActivity.class);
         startActivity(intent);
+    }
+    public void writeFirebaseData(){
+        String key = myRef.push().getKey();
+        FirebaseData firebaseData = new FirebaseData("이영준",null,"예시",37.105313f,127.123013f,"수정구",true);
+        myRef.child(key).setValue(firebaseData);
     }
 }

@@ -6,12 +6,26 @@ package com.veryworks.iyeongjun.seoulssul.Domain;
 
 public class FirebaseData {
     private String userName;
+    private String userImg;
     private String contents;
     private String objectID;
     private float locationLat = 0.0f;
     private float locationLong = 0.0f;
-    private String gCode = null;
+    private String section = null;
     private boolean isFirebase;
+
+    public FirebaseData() {
+    }
+
+    public FirebaseData(String userName, String userImg, String contents,  float locationLat, float locationLong, String section, boolean isFirebase) {
+        this.userName = userName;
+        this.userImg = userImg;
+        this.contents = contents;
+        this.locationLat = locationLat;
+        this.locationLong = locationLong;
+        this.section = section;
+        this.isFirebase = isFirebase;
+    }
 
     public String getUserName() {
         return userName;
@@ -53,13 +67,6 @@ public class FirebaseData {
         this.locationLong = locationLong;
     }
 
-    public String getgCode() {
-        return gCode;
-    }
-
-    public void setgCode(String gCode) {
-        this.gCode = gCode;
-    }
 
     public boolean isFirebase() {
         return isFirebase;
@@ -67,5 +74,21 @@ public class FirebaseData {
 
     public void setFirebase(boolean firebase) {
         isFirebase = firebase;
+    }
+
+    public String getUserImg() {
+        return userImg;
+    }
+
+    public void setUserImg(String userImg) {
+        this.userImg = userImg;
+    }
+
+    public String getSection() {
+        return section;
+    }
+
+    public void setSection(String section) {
+        this.section = section;
     }
 }
