@@ -17,34 +17,32 @@
         android:layout_margin="0dp"/>
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnAR"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        android:layout_alignBaseline="@+id/button3"
-        android:layout_alignBottom="@+id/button3"
-        android:layout_toEndOf="@+id/button3" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        android:layout_alignBaseline="@+id/button4"
-        android:layout_alignBottom="@+id/button4"
-        android:layout_toEndOf="@+id/button4" />
-
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        android:layout_marginStart="18dp"
         android:layout_alignParentBottom="true"
-        android:layout_toEndOf="@+id/button5" />
+        android:layout_alignParentEnd="true"
+        android:text="Button" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/btnWrite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@+id/btnAR" />
+
+    <Button
+        android:id="@+id/btnMypage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        android:layout_marginStart="12dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/btnRefresh" />
+
+    <Button
+        android:id="@+id/btnRefresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Button"

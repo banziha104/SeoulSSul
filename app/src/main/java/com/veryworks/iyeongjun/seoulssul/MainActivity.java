@@ -43,10 +43,7 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback{
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("boardData");
 
-    @BindView(R.id.button2) Button button2;
-    @BindView(R.id.button3) Button button3;
-    @BindView(R.id.button4) Button button4;
-    @BindView(R.id.button5) Button button5;
+
 
 //    private ArrayList<String> al;
 //    private ArrayAdapter<String> arrayAdapter;
@@ -136,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback{
         adapter.notifyDataSetChanged();
 
     }
-    @OnClick(R.id.button4)
+    @OnClick(R.id.btnAR)
     public void button4Clicked(){
         Intent intent = new Intent(MainActivity.this, ARActivity.class);
         startActivity(intent);
