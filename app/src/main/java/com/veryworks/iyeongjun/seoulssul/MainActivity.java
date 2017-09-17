@@ -27,6 +27,8 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity implements AdapterCallback {
     SeoulDataReceiver receiver = new SeoulDataReceiver(this);
+    UserLocation userLocation = new UserLocation(this);
+
     List<ShuffledData> tempData;
     CustomAdapter adapter;
 
@@ -55,12 +57,13 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        writeFirebaseData();
         Typekit.getInstance().addNormal(Typekit.createFromAsset(this, "amsfont.ttf"));
+        userLocation.getLocation();
         flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
         tempData = new ArrayList<>();
         receiver.getSeoulData();
-        UserLocation.getLocation(this);
+
+
     }
 
     @Override
@@ -153,4 +156,8 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
         startActivity(intent);
     }
 
+    @Override
+    public void onBackPressed() {
+        // 뒤로가기 막기
+    }
 }

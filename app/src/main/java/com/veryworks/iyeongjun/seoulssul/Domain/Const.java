@@ -12,6 +12,7 @@ public class Const {
         public static final String SEOUL_API_KEY = "6d59646256646c6431303073497a5353";
         public static final String FACEBOOK_APP_ID = "487874731592926";
         public static final String FACEBOOK_CODE ="54b8b3be4b99d2f54300e7d609a1a8b5,https://seoulssul.firebaseapp.com/__/auth/handler";
+        public static final String GOOGLE_MAP_KEY ="AIzaSyChOAuUgCbADQ5vcgzOloV0J6-SloAASWk";
     }
     public static class DataType{
         public static final boolean SEOUL_DATA = true;
@@ -27,8 +28,9 @@ public class Const {
         public static final String GUEST_PASSWORD = "id3dkgajkdl93910";
     }
     public static class GPS{
-        public static final int GPS_MILE_SECOND = 10000;
-        public static final int GPS_MIN_LENGTH = 1000;
+        public static final int GPS_MILE_SECOND = 100;
+        public static final int GPS_MIN_LENGTH = 1;
+        public static final int GPS_DEFAULT_RESULT = 1;
 
     }
 
