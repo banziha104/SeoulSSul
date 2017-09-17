@@ -36,6 +36,8 @@ import java.util.Arrays;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.veryworks.iyeongjun.seoulssul.Domain.UserData.userInstance;
 import static com.veryworks.iyeongjun.seoulssul.Util.PermissionControl.checkVersion;
 
 
@@ -184,8 +186,10 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
                             Log.w("Firebase", "signInWithEmail:failed", task.getException());
                             Toast.makeText(LoginActivity.this,"게스트로 시작합니다",
                                     Toast.LENGTH_SHORT).show();
+                            userInstance.setName("GUEST");
+                            userInstance.setImage_url(null);
+                            userInstance.setNextTime(true);
                         }
-
                         // ...
                     }
                 });

@@ -7,6 +7,8 @@ import android.location.Location;
  */
 
 public class UserData {
+    public static UserData userInstance;
+
     private String name;
     private String image_url;
     private Boolean isNextTime;

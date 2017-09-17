@@ -3,24 +3,16 @@ package com.veryworks.iyeongjun.seoulssul.Domain;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Debug;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
-import java.util.List;
-
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -156,7 +148,6 @@ public class UserLocation {
 //            JSONArray tempArr = obj.getJSONArray("results");
 //            JSONArray arr = tempArr.getJSONArray(0);
 //            JSONObject tempObj = arr.getJSONObject(1);
-
         } catch (JSONException e) {
             e.printStackTrace();
         }

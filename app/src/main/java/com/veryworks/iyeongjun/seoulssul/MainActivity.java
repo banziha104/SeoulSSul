@@ -27,8 +27,6 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity implements AdapterCallback {
     SeoulDataReceiver receiver = new SeoulDataReceiver(this);
-    UserLocation userLocation = new UserLocation(this);
-
     List<ShuffledData> tempData;
     CustomAdapter adapter;
 

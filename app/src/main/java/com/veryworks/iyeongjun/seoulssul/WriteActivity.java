@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.veryworks.iyeongjun.seoulssul.Domain.Const;
 import com.veryworks.iyeongjun.seoulssul.Domain.FirebaseData;
+import com.veryworks.iyeongjun.seoulssul.Domain.UserData;
 import com.veryworks.iyeongjun.seoulssul.Domain.UserLocation;
 import com.veryworks.iyeongjun.seoulssul.Util.CustomBitmapPool;
 
@@ -23,6 +24,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.ColorFilterTransformation;
+
+import static com.veryworks.iyeongjun.seoulssul.Domain.UserData.userInstance;
 
 public class WriteActivity extends AppCompatActivity {
     int[] drawableResource = new int[Const.Num.IMG_LENGTH];
@@ -63,7 +66,9 @@ public class WriteActivity extends AppCompatActivity {
 
     @OnClick(R.id.imageButton)
     public void btnWriteClicked(){
-        FirebaseData firebaseData = new FirebaseData("이영준", null
+        FirebaseData firebaseData = new FirebaseData(
+                userInstance.getName()
+                , userInstance.getImage_url()
                 , editWrite.getText().toString()
                 , UserLocation.currentUserLocation.getLatitude()
                 , UserLocation.currentUserLocation.getLongitude()
