@@ -26,5 +26,10 @@ public class Const {
         public static final String GUEST_EMAIL = "guest@guest.com";
         public static final String GUEST_PASSWORD = "id3dkgajkdl93910";
     }
+    public static class GPS{
+        public static final int GPS_MILE_SECOND = 10000;
+        public static final int GPS_MIN_LENGTH = 1000;
+
+    }
 
 }

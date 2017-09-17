@@ -1,5 +1,7 @@
 package com.veryworks.iyeongjun.seoulssul.Domain;
 
+import android.location.Location;
+
 /**
  * Created by iyeongjun on 2017. 9. 4..
  */

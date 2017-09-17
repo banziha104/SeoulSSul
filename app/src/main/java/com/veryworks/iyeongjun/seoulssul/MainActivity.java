@@ -8,19 +8,15 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import com.tsengvn.typekit.Typekit;
 import com.tsengvn.typekit.TypekitContextWrapper;
 import com.veryworks.iyeongjun.seoulssul.Domain.FirebaseData;
 import com.veryworks.iyeongjun.seoulssul.Domain.SeoulDataReceiver;
 import com.veryworks.iyeongjun.seoulssul.Domain.ShuffledData;
-import com.veryworks.iyeongjun.seoulssul.Util.PermissionControl;
+import com.veryworks.iyeongjun.seoulssul.Domain.UserLocation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +24,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
-public class MainActivity extends AppCompatActivity implements AdapterCallback{
+public class MainActivity extends AppCompatActivity implements AdapterCallback {
     SeoulDataReceiver receiver = new SeoulDataReceiver(this);
     List<ShuffledData> tempData;
     CustomAdapter adapter;
@@ -43,6 +38,11 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback{
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("boardData");
 
+    @BindView(R.id.frame) SwipeFlingAdapterView frame;
+    @BindView(R.id.btnAR) Button btnAR;
+    @BindView(R.id.btnWrite) Button btnWrite;
+    @BindView(R.id.btnMypage) Button btnMypage;
+    @BindView(R.id.btnRefresh) Button btnRefresh;
 
 
 //    private ArrayList<String> al;
@@ -56,10 +56,11 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback{
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         writeFirebaseData();
-        Typekit.getInstance().addNormal(Typekit.createFromAsset(this,"amsfont.ttf"));
+        Typekit.getInstance().addNormal(Typekit.createFromAsset(this, "amsfont.ttf"));
         flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
         tempData = new ArrayList<>();
         receiver.getSeoulData();
+        UserLocation.getLocation(this);
     }
 
     @Override
@@ -69,12 +70,12 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback{
 
     @Override
     public void callback(ArrayList<ShuffledData> datas) {
-        for(int i = 0; i < curPosition ; i++){
+        for (int i = 0; i < curPosition; i++) {
             tempData.add(datas.get(i));
         }
         final ArrayList<ShuffledData> storage = datas;
         //choose your favorite adapter
-        adapter = new CustomAdapter(this, R.layout.item, R.id.txtContents,tempData);
+        adapter = new CustomAdapter(this, R.layout.item, R.id.txtContents, tempData);
         flingContainer.setAdapter(adapter);
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
@@ -103,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback{
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
                 // 어댑터가 빈다면 어떻게 할것인가
                 // 여기를 바꿔줘야하넹
-                Log.d("Empty","Empty");
+                Log.d("Empty", "Empty");
 
 //                    al.add("XML ".concat(String.valueOf(i)));
 //                    arrayAdapter.notifyDataSetChanged();
@@ -114,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback{
 
             @Override
             public void onScroll(float scrollProgressPercent) {
-                if(scrolledToggle == true && scrollProgressPercent != 0f){
+                if (scrolledToggle == true && scrollProgressPercent != 0f) {
                     curPosition++;
                     tempData.add(storage.get(curPosition));
                     adapter.notifyDataSetChanged();
@@ -122,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback{
                 }
             }
         });
-        Log.d("End","End");
+        Log.d("End", "End");
         // Optionally add an OnItemClickListener
         flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
             @Override
@@ -133,14 +134,23 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback{
         adapter.notifyDataSetChanged();
 
     }
+
     @OnClick(R.id.btnAR)
-    public void button4Clicked(){
+    public void arButtonClicked() {
         Intent intent = new Intent(MainActivity.this, ARActivity.class);
         startActivity(intent);
     }
-    public void writeFirebaseData(){
+
+    public void writeFirebaseData() {
         String key = myRef.push().getKey();
-        FirebaseData firebaseData = new FirebaseData("이영준",null,"예시",37.105313f,127.123013f,"수정구",true);
+        FirebaseData firebaseData = new FirebaseData("이영준", null, "예시", 37.105313f, 127.123013f, "수정구", true);
         myRef.child(key).setValue(firebaseData);
     }
+
+    @OnClick(R.id.btnWrite)
+    public void writeButtonClicked(){
+        Intent intent = new Intent(MainActivity.this, WriteActivity.class);
+        startActivity(intent);
+    }
+
 }

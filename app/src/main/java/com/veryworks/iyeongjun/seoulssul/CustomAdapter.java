@@ -78,7 +78,7 @@ public class CustomAdapter extends ArrayAdapter<ShuffledData>{
                 .into(imgFore);
 
         Glide.with(context).load(drawableResource[curPos % Const.Num.IMG_LENGTH])
-                .bitmapTransform(new ColorFilterTransformation(new CustomBitmapPool(), Color.argb(160, 0, 0, 0)))
+                .bitmapTransform(new ColorFilterTransformation(new CustomBitmapPool(), Color.argb(100, 0, 0, 0)))
                 .into(imgBack);
 
         txtTitle.setText(data.getTitle());

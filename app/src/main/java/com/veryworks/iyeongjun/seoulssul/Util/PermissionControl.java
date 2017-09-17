@@ -17,7 +17,8 @@ public class PermissionControl {
     private static String permissions[] = {
             Manifest.permission.INTERNET,
             Manifest.permission.CAMERA,
-            Manifest.permission.ACCESS_FINE_LOCATION
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
     };
 
     public static void checkVersion(Activity activity){

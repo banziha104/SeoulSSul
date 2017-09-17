@@ -1,9 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/writeContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.veryworks.iyeongjun.seoulssul.WriteActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <ImageView
+        android:id="@+id/imgWriteBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:srcCompat="@drawable/cast_abc_scrubber_primary_mtrl_alpha" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <EditText
+            android:id="@+id/editWrite"
+            android:layout_width="match_parent"
+            android:layout_height="430dp"
+            android:layout_above="@+id/imageButton"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:background="@null"
+            android:ems="10"
+            android:hint="글을 입력하세요"
+            android:inputType="textMultiLine"
+            android:textAlignment="center"
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="57dp" />
+
+        <ImageView
+            android:id="@+id/imgWrite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/editWrite"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            app:srcCompat="@drawable/cast_abc_scrubber_control_to_pressed_mtrl_000" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            app:srcCompat="@drawable/cast_abc_scrubber_control_to_pressed_mtrl_000"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="481dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="0dp"
+            android:paddingBottom="0dp"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>
