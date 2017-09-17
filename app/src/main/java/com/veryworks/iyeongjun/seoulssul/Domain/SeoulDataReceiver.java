@@ -35,6 +35,7 @@ public class SeoulDataReceiver {
     Context context;
     Row[] row = null;
     AdapterCallback adapterCallback;
+    UserLocation userLocation;
     int start = 1;
     int end = 1000;
     public SeoulDataReceiver(Context context) {
@@ -53,7 +54,6 @@ public class SeoulDataReceiver {
                 .build();
         InterfaceForGetSeoulData interfaceForGetSeoulData   //인터페이스 생성
                 = retrofit.create(InterfaceForGetSeoulData.class);
-
         final Call<SeoulData> result
                 = interfaceForGetSeoulData.getSeoulData(Const.Key.SEOUL_API_KEY,start,end); //서울시 API키 입력
         start += Const.Num.NEXT_PAGE;
@@ -68,6 +68,8 @@ public class SeoulDataReceiver {
                 for(int i = 0 ; i < datas.size() ; i++){
                     Log.d("Receiever",datas.get(i).getTitle());
                 }
+                userLocation = new UserLocation(context);
+                userLocation.getLocation();
                 adapterCallback.callback(datas); //어뎁터 콜백 인터페이스
             }
             @Override

@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         Typekit.getInstance().addNormal(Typekit.createFromAsset(this, "amsfont.ttf"));
-        userLocation.getLocation();
         flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
         tempData = new ArrayList<>();
         receiver.getSeoulData();
@@ -142,12 +141,6 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
     public void arButtonClicked() {
         Intent intent = new Intent(MainActivity.this, ARActivity.class);
         startActivity(intent);
-    }
-
-    public void writeFirebaseData() {
-        String key = myRef.push().getKey();
-        FirebaseData firebaseData = new FirebaseData("이영준", null, "예시", 37.105313f, 127.123013f, "수정구", true);
-        myRef.child(key).setValue(firebaseData);
     }
 
     @OnClick(R.id.btnWrite)

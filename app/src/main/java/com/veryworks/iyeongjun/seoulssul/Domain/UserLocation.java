@@ -10,11 +10,15 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Debug;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -31,6 +35,8 @@ import retrofit2.http.Query;
  */
 
 public class UserLocation {
+    public static String currentUserDivision;
+    public static Location currentUserLocation;
     boolean isGPSEnabled;
     boolean isNetworkEnabled;
     boolean locationServiceEnabled;
@@ -80,6 +86,7 @@ public class UserLocation {
     LocationListener locationListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
+            currentUserLocation = location;
             Log.d("LOCATION Confirm", location.getLatitude()+" / "+location.getLongitude()+" / " +location.getAccuracy() );
             String tempLocation = location.getLatitude()+","+location.getLongitude();
             reverseGeocoder(tempLocation);
@@ -104,7 +111,8 @@ public class UserLocation {
         @GET("/maps/api/geocode/json")
         Call<ResponseBody> reverseGeoCoding(
                 @Query("latlng") String location,
-                @Query("key") String key
+                @Query("key") String key,
+                @Query("language") String lang
                 );
     }
     public void reverseGeocoder(String latlng){
@@ -115,11 +123,18 @@ public class UserLocation {
                 = retrofit.create(InterfaceForGeoCoding.class);
 
         Call<ResponseBody> result
-                =interfaceGeocoding.reverseGeoCoding(latlng,Const.Key.GOOGLE_MAP_KEY);
+                =interfaceGeocoding.reverseGeoCoding(latlng,Const.Key.GOOGLE_MAP_KEY,"ko");
         result.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Log.d("LOCATION",response.body()+"");
+
+                try {
+                    ResponseBody body = response.body();
+                    String str = body.string();
+                    getAdress(str);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -127,5 +142,23 @@ public class UserLocation {
 
             }
         });
+    }
+    private void getAdress(String body){
+        try {
+            JSONObject obj = new JSONObject(body);
+            String addressCompnents = obj.getJSONArray("results")
+                    .getJSONObject(1)
+                    .getJSONArray("address_components")
+                    .getJSONObject(2)
+                    .getString("short_name");
+            Log.d("LOCATION RESULT",addressCompnents.toString());
+            currentUserDivision = addressCompnents;
+//            JSONArray tempArr = obj.getJSONArray("results");
+//            JSONArray arr = tempArr.getJSONArray(0);
+//            JSONObject tempObj = arr.getJSONObject(1);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

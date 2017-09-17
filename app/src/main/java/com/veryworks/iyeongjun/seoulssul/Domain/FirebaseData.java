@@ -9,15 +9,15 @@ public class FirebaseData {
     private String userImg;
     private String contents;
     private String objectID;
-    private float locationLat = 0.0f;
-    private float locationLong = 0.0f;
+    private double locationLat = 0.0;
+    private double locationLong = 0.0;
     private String section = null;
     private boolean isFirebase;
 
     public FirebaseData() {
     }
 
-    public FirebaseData(String userName, String userImg, String contents,  float locationLat, float locationLong, String section, boolean isFirebase) {
+    public FirebaseData(String userName, String userImg, String contents,  double locationLat, double locationLong, String section, boolean isFirebase) {
         this.userName = userName;
         this.userImg = userImg;
         this.contents = contents;
@@ -51,22 +51,21 @@ public class FirebaseData {
         this.objectID = objectID;
     }
 
-    public float getLocationLat() {
+    public double getLocationLat() {
         return locationLat;
     }
 
-    public void setLocationLat(float locationLat) {
+    public void setLocationLat(double locationLat) {
         this.locationLat = locationLat;
     }
 
-    public float getLocationLong() {
+    public double getLocationLong() {
         return locationLong;
     }
 
-    public void setLocationLong(float locationLong) {
+    public void setLocationLong(double locationLong) {
         this.locationLong = locationLong;
     }
-
 
     public boolean isFirebase() {
         return isFirebase;

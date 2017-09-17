@@ -10,22 +10,33 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.veryworks.iyeongjun.seoulssul.Domain.Const;
+import com.veryworks.iyeongjun.seoulssul.Domain.FirebaseData;
+import com.veryworks.iyeongjun.seoulssul.Domain.UserLocation;
 import com.veryworks.iyeongjun.seoulssul.Util.CustomBitmapPool;
 
 import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.ColorFilterTransformation;
 
 public class WriteActivity extends AppCompatActivity {
     int[] drawableResource = new int[Const.Num.IMG_LENGTH];
+
     @BindView(R.id.imgWriteBackground) ImageView imgWriteBackground;
     @BindView(R.id.editWrite) EditText editWrite;
     @BindView(R.id.imgWrite) ImageView imgWrite;
     @BindView(R.id.imageButton) ImageButton imageButton;
     @BindView(R.id.writeContainer) RelativeLayout writeContainer;
+
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference("boardData");
+
     Random random;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,5 +59,16 @@ public class WriteActivity extends AppCompatActivity {
         Glide.with(this).load(drawableResource[randomImage])
                 .bitmapTransform(new ColorFilterTransformation(new CustomBitmapPool(), Color.argb(80, 0, 0, 0)))
                 .override(800,1000).into(imgWriteBackground);
+    }
+
+    @OnClick(R.id.imageButton)
+    public void btnWriteClicked(){
+        FirebaseData firebaseData = new FirebaseData("이영준", null
+                , editWrite.getText().toString()
+                , UserLocation.currentUserLocation.getLatitude()
+                , UserLocation.currentUserLocation.getLongitude()
+                , UserLocation.currentUserDivision,
+                true);
+        myRef.child(UserLocation.currentUserDivision).setValue(firebaseData);
     }
 }
