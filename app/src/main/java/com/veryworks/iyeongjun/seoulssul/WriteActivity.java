@@ -61,11 +61,12 @@ public class WriteActivity extends AppCompatActivity {
         }
         Glide.with(this).load(drawableResource[randomImage])
                 .bitmapTransform(new ColorFilterTransformation(new CustomBitmapPool(), Color.argb(80, 0, 0, 0)))
-                .override(800,1000).into(imgWriteBackground);
+                .into(imgWriteBackground);
     }
 
     @OnClick(R.id.imageButton)
     public void btnWriteClicked(){
+        String key = myRef.getKey();
         FirebaseData firebaseData = new FirebaseData(
                 userInstance.getName()
                 , userInstance.getImage_url()
@@ -74,6 +75,6 @@ public class WriteActivity extends AppCompatActivity {
                 , UserLocation.currentUserLocation.getLongitude()
                 , UserLocation.currentUserDivision,
                 true);
-        myRef.child(UserLocation.currentUserDivision).setValue(firebaseData);
+        myRef.child(UserLocation.currentUserDivision).child(key).setValue(firebaseData);
     }
 }
