@@ -28,10 +28,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.veryworks.iyeongjun.seoulssul.Domain.Const;
 import com.veryworks.iyeongjun.seoulssul.Domain.SeoulDataReceiver;
+import com.veryworks.iyeongjun.seoulssul.Domain.ShuffledData;
 import com.veryworks.iyeongjun.seoulssul.Util.PermissionControl;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import butterknife.BindView;
@@ -80,7 +82,7 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
      * 페이스북 로그인 버튼
      */
     @OnClick(R.id.btnFacebook)
-    public void goMainWithFacebook(){
+    public void goMainWithFacebook() {
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this,
@@ -121,7 +123,7 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
 
             @Override
             public void onCancel() {
-                Log.e("FalseBookCancel", "Cancel" );
+                Log.e("FalseBookCancel", "Cancel");
             }
         });
     }
