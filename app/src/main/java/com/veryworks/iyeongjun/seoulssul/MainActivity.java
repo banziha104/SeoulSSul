@@ -26,10 +26,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity implements AdapterCallback {
-    SeoulDataReceiver receiver = new SeoulDataReceiver(this);
     List<ShuffledData> tempData;
     CustomAdapter adapter;
-
+    SeoulDataReceiver receiver = new SeoulDataReceiver(this);
     int curPosition = 1;
     boolean scrolledToggle = true;
 
@@ -59,8 +58,6 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
         flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
         tempData = new ArrayList<>();
         receiver.getSeoulData();
-
-
     }
 
     @Override

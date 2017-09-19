@@ -2,12 +2,14 @@ package com.veryworks.iyeongjun.seoulssul;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Debug;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DatabaseReference;
@@ -48,6 +50,7 @@ public class WriteActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         random = new Random();
         setImagBackground();
+
     }
 
     private void setImagBackground(){
@@ -66,15 +69,22 @@ public class WriteActivity extends AppCompatActivity {
 
     @OnClick(R.id.imageButton)
     public void btnWriteClicked(){
-        String key = myRef.getKey();
-        FirebaseData firebaseData = new FirebaseData(
-                userInstance.getName()
-                , userInstance.getImage_url()
-                , editWrite.getText().toString()
-                , UserLocation.currentUserLocation.getLatitude()
-                , UserLocation.currentUserLocation.getLongitude()
-                , UserLocation.currentUserDivision,
-                true);
-        myRef.child(UserLocation.currentUserDivision).child(key).setValue(firebaseData);
+        String key = myRef.push().getKey();
+        Log.d("KEY",key);
+        if (editWrite.getText()+"" != null) {
+            FirebaseData firebaseData = new FirebaseData(
+                    userInstance.getName()
+                    , userInstance.getImage_url()
+                    , editWrite.getText().toString()
+                    , UserLocation.currentUserLocation.getLatitude()
+                    , UserLocation.currentUserLocation.getLongitude()
+                    , UserLocation.currentUserDivision,
+                    true);
+            myRef.child(UserLocation.currentUserDivision).child(key).setValue(firebaseData);
+            Toast.makeText(this, "저장 되었습니다", Toast.LENGTH_SHORT).show();
+            finish();
+        }else{
+            Toast.makeText(this, "글이 입력되지 않았습니다", Toast.LENGTH_SHORT).show();
+        }
     }
 }

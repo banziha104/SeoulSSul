@@ -27,6 +27,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.veryworks.iyeongjun.seoulssul.Domain.Const;
+import com.veryworks.iyeongjun.seoulssul.Domain.SeoulDataReceiver;
 import com.veryworks.iyeongjun.seoulssul.Util.PermissionControl;
 
 import org.json.JSONObject;
@@ -139,6 +140,7 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
     @OnClick(R.id.btnNextTime)
     public void goMainWithNextTime(){
         guestLogin(Const.Guest.GUEST_EMAIL,Const.Guest.GUEST_PASSWORD);
+
         Intent intent = new Intent(LoginActivity.this,MainActivity.class);
         startActivity(intent);
     }
@@ -177,20 +179,15 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d("Firebase", "signInWithEmail:onComplete:" + task.isSuccessful());
-
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            Log.w("Firebase", "signInWithEmail:failed", task.getException());
+                        if (task.isSuccessful()) {
                             Toast.makeText(LoginActivity.this,"게스트로 시작합니다",
                                     Toast.LENGTH_SHORT).show();
                             userInstance.setName("GUEST");
-                            userInstance.setImage_url(null);
+                            userInstance.setImage_url("noImage");
                             userInstance.setNextTime(true);
+                        } else {
+                            Toast.makeText(LoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
                         }
-                        // ...
                     }
                 });
     }

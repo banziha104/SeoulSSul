@@ -7,7 +7,7 @@ import android.location.Location;
  */
 
 public class UserData {
-    public static UserData userInstance;
+    public static UserData userInstance = new UserData();
 
     private String name;
     private String image_url;
