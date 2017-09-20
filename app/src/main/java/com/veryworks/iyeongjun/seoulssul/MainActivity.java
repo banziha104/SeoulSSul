@@ -1,5 +1,7 @@
 package com.veryworks.iyeongjun.seoulssul;
 
+import android.*;
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -8,7 +10,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
@@ -38,21 +40,20 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("boardData");
-
+    @BindView(R.id.btnLike)
+    ImageButton btnLike;
+    @BindView(R.id.btnAr)
+    ImageButton btnAr;
+    @BindView(R.id.btnRedirect)
+    ImageButton btnRedirect;
+    @BindView(R.id.btnCall)
+    ImageButton btnCall;
+    @BindView(R.id.btnWrite)
+    ImageButton btnWrite;
     @BindView(R.id.frame)
     SwipeFlingAdapterView frame;
-    @BindView(R.id.btnAR)
-    Button btnAR;
-    @BindView(R.id.btnWrite)
-    Button btnWrite;
-    @BindView(R.id.btnRedirect)
-    Button btnRedirect;
-    @BindView(R.id.btnCall)
-    Button btnCall;
     @BindView(R.id.btnMenu)
-    Button btnMenu;
-
-
+    ImageButton btnMenu;
 
 
     @Override
@@ -124,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
                     tempShuffledData = storage.get(curPosition);
                     adapter.notifyDataSetChanged();
                     scrolledToggle = false;
-                    Log.d("CALL",tempShuffledData.getInquiry());
+                    Log.d("CALL", tempShuffledData.getInquiry());
                 }
             }
         });
@@ -145,21 +146,17 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
         if (!tempShuffledData.isFirebase()) {
             Intent intent = new Intent(Intent.ACTION_DIAL);
             intent.setData(Uri.parse("tel:" + tempShuffledData.getInquiry()));
-            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
             startActivity(intent);
         }
     }
 
-    private String phoneNumberParser(String str) {
-        return str;
-    }
-
     @OnClick(R.id.btnRedirect)
     public void redirectButtonClicked() {
         if (!tempShuffledData.isFirebase()) {
-            Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(tempShuffledData.getOrg_link()));
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(tempShuffledData.getOrg_link()));
             startActivity(intent);
         }
     }
