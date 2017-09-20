@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
         }
     }
 
-    @OnClick(R.id.btnAR)
+    @OnClick(R.id.btnAr)
     public void arButtonClicked() {
         Intent intent = new Intent(MainActivity.this, ARActivity.class);
         startActivity(intent);

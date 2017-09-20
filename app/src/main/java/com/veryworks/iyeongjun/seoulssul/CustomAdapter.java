@@ -68,7 +68,6 @@ public class CustomAdapter extends ArrayAdapter<ShuffledData>{
         View view = super.getView(position,convertView,parent);
         ShuffledData data = datas.get(position);
 
-        TextView txtTitle = view.findViewById(R.id.txtTitle);
         TextView txtContents = view.findViewById(R.id.txtContents);
         ImageView imgFore = view.findViewById(R.id.imgFore);
         ImageView imgBack = view.findViewById(R.id.imgBack);
@@ -81,7 +80,6 @@ public class CustomAdapter extends ArrayAdapter<ShuffledData>{
                 .bitmapTransform(new ColorFilterTransformation(new CustomBitmapPool(), Color.argb(100, 0, 0, 0)))
                 .into(imgBack);
 
-        txtTitle.setText(data.getTitle());
         txtContents.setText(data.getContents());
         curPos++;
         return view;
