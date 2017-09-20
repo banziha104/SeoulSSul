@@ -71,4 +71,7 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:+'
     compile 'com.android.support:design:25.3.1'
 }
+dependencies {
+    compile 'com.android.support.constraint:constraint-layout:+'
+}
 apply plugin: 'com.google.gms.google-services'

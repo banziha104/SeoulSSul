@@ -26,9 +26,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.veryworks.iyeongjun.seoulssul.Domain.Const;
-import com.veryworks.iyeongjun.seoulssul.Domain.SeoulDataReceiver;
-import com.veryworks.iyeongjun.seoulssul.Domain.ShuffledData;
+import com.veryworks.iyeongjun.seoulssul.Domain.Const; 
 import com.veryworks.iyeongjun.seoulssul.Util.PermissionControl;
 
 import org.json.JSONObject;
@@ -54,7 +52,6 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
     CallbackManager callbackManager;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +62,6 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
             init();
         }
     }
-
     @Override
     protected void onStart() {
         super.onStart();
