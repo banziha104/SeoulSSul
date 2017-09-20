@@ -23,6 +23,7 @@ public class ShuffledData {
     private String org_link = null; // 원문 링크
     private String image = null;    // 이미지 주소
     private String gcode = null;    //지역
+    private String inquiry = null;
 
     //Firebase
     private float locationLat = 0.0f;
@@ -64,6 +65,7 @@ public class ShuffledData {
         data.setImage(row[index].getMAIN_IMG());
         data.setOrg_link(row[index].getORG_LINK());
         data.setContents(mergeSeoulData(row[index]));
+        data.setInquiry(row[index].getINQUIRY());
         data.setFirebase(false);
         Data.shuffledData.add(data);
     }
@@ -138,5 +140,13 @@ public class ShuffledData {
 
     public void setFirebase(boolean firebase) {
         isFirebase = firebase;
+    }
+
+    public String getInquiry() {
+        return inquiry;
+    }
+
+    public void setInquiry(String inquiry) {
+        this.inquiry = inquiry;
     }
 }

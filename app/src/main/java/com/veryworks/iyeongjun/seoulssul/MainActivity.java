@@ -2,7 +2,10 @@ package com.veryworks.iyeongjun.seoulssul;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
@@ -13,10 +16,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import com.tsengvn.typekit.Typekit;
 import com.tsengvn.typekit.TypekitContextWrapper;
-import com.veryworks.iyeongjun.seoulssul.Domain.FirebaseData;
 import com.veryworks.iyeongjun.seoulssul.Domain.SeoulDataReceiver;
 import com.veryworks.iyeongjun.seoulssul.Domain.ShuffledData;
-import com.veryworks.iyeongjun.seoulssul.Domain.UserLocation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
     List<ShuffledData> tempData;
     CustomAdapter adapter;
     SeoulDataReceiver receiver = new SeoulDataReceiver(this);
+    ShuffledData tempShuffledData = new ShuffledData();
     int curPosition = 1;
     boolean scrolledToggle = true;
 
@@ -37,16 +39,20 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("boardData");
 
-    @BindView(R.id.frame) SwipeFlingAdapterView frame;
-    @BindView(R.id.btnAR) Button btnAR;
-    @BindView(R.id.btnWrite) Button btnWrite;
-    @BindView(R.id.btnMypage) Button btnMypage;
-    @BindView(R.id.btnRefresh) Button btnRefresh;
+    @BindView(R.id.frame)
+    SwipeFlingAdapterView frame;
+    @BindView(R.id.btnAR)
+    Button btnAR;
+    @BindView(R.id.btnWrite)
+    Button btnWrite;
+    @BindView(R.id.btnRedirect)
+    Button btnRedirect;
+    @BindView(R.id.btnCall)
+    Button btnCall;
+    @BindView(R.id.btnMenu)
+    Button btnMenu;
 
 
-//    private ArrayList<String> al;
-//    private ArrayAdapter<String> arrayAdapter;
-//    private int i;
 
 
     @Override
@@ -115,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
                 if (scrolledToggle == true && scrollProgressPercent != 0f) {
                     curPosition++;
                     tempData.add(storage.get(curPosition));
+                    tempShuffledData = storage.get(curPosition);
                     adapter.notifyDataSetChanged();
                     scrolledToggle = false;
                 }
@@ -132,6 +139,28 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
 
     }
 
+    @OnClick(R.id.btnCall)
+    public void callButtonClicked() {
+        if (!tempShuffledData.isFirebase()) {
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.setData(Uri.parse("tel:" + tempShuffledData.getInquiry()));
+            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+            startActivity(intent);
+        }
+    }
+
+    private String phoneNumberParser(String str) {
+        return str;
+    }
+
+    @OnClick(R.id.btnRedirect)
+    public void redirectButtonClicked() {
+        Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(tempShuffledData.getOrg_link()));
+        startActivity(intent);
+    }
+
     @OnClick(R.id.btnAR)
     public void arButtonClicked() {
         Intent intent = new Intent(MainActivity.this, ARActivity.class);
@@ -139,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
     }
 
     @OnClick(R.id.btnWrite)
-    public void writeButtonClicked(){
+    public void writeButtonClicked() {
         Intent intent = new Intent(MainActivity.this, WriteActivity.class);
         startActivity(intent);
     }
