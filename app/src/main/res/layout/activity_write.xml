@@ -11,53 +11,68 @@
         android:id="@+id/imgWriteBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:background="@null"
         android:scaleType="fitXY"
-        app:srcCompat="@drawable/cast_abc_scrubber_primary_mtrl_alpha" />
+        app:srcCompat="@null" />
+
+    <EditText
+        android:id="@+id/editWrite"
+        android:layout_width="match_parent"
+        android:layout_height="430dp"
+        android:layout_above="@+id/imageButton"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:background="@null"
+        android:ems="10"
+        android:hint="글을 입력하세요"
+        android:inputType="textMultiLine"
+        android:textAlignment="center"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="57dp"
+        android:layout_below="@+id/relativeLayout" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:background="@null"
+        android:paddingBottom="0dp"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/write_upload_btn"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="481dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
-
-        <EditText
-            android:id="@+id/editWrite"
-            android:layout_width="match_parent"
-            android:layout_height="430dp"
-            android:layout_above="@+id/imageButton"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentStart="true"
-            android:background="@null"
-            android:ems="10"
-            android:hint="글을 입력하세요"
-            android:inputType="textMultiLine"
-            android:textAlignment="center"
-            tools:layout_editor_absoluteX="1dp"
-            tools:layout_editor_absoluteY="57dp" />
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/frame"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <ImageView
-            android:id="@+id/imgWrite"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/editWrite"
-            android:layout_alignParentStart="true"
+            android:id="@+id/imageView"
+            android:layout_width="314dp"
+            android:layout_height="42dp"
             android:layout_alignParentTop="true"
-            app:srcCompat="@drawable/cast_abc_scrubber_control_to_pressed_mtrl_000" />
-
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            app:srcCompat="@drawable/cast_abc_scrubber_control_to_pressed_mtrl_000"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="481dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="0dp"
-            android:paddingBottom="0dp"/>
-
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="19dp"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/banner" />
     </RelativeLayout>
 
 </RelativeLayout>

@@ -34,7 +34,6 @@ public class WriteActivity extends AppCompatActivity {
 
     @BindView(R.id.imgWriteBackground) ImageView imgWriteBackground;
     @BindView(R.id.editWrite) EditText editWrite;
-    @BindView(R.id.imgWrite) ImageView imgWrite;
     @BindView(R.id.imageButton) ImageButton imageButton;
     @BindView(R.id.writeContainer) RelativeLayout writeContainer;
 

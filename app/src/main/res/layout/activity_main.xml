@@ -6,18 +6,24 @@
     android:layout_height="match_parent"
     tools:context="com.veryworks.iyeongjun.seoulssul.MainActivity">
 
-    <ImageButton
-        android:id="@+id/btnMenu"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
+    <com.lorentzos.flingswipe.SwipeFlingAdapterView
+        android:id="@+id/frame"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="@null"
-        app:srcCompat="@drawable/btn_menu"
-        android:layout_marginRight="16dp"
-        app:layout_constraintRight_toRightOf="@+id/relativeLayout"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="20dp" />
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="0dp"
+        android:text="Hello World!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
@@ -46,6 +52,19 @@
             app:srcCompat="@drawable/banner" />
     </RelativeLayout>
 
+    <ImageButton
+        android:id="@+id/btnMenu"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="20dp"
+        android:background="@null"
+        app:layout_constraintRight_toRightOf="@+id/relativeLayout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/btn_menu" />
+
     <android.support.constraint.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="84dp"
@@ -64,7 +83,7 @@
             android:id="@+id/btnLike"
             android:layout_width="19dp"
             android:layout_height="19dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="13dp"
             android:layout_marginRight="45dp"
             android:layout_marginTop="10dp"
             android:background="@null"
@@ -76,21 +95,22 @@
 
         <ImageButton
             android:id="@+id/btnAr"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginLeft="47dp"
             android:layout_marginRight="8dp"
+            android:layout_marginStart="47dp"
             android:layout_marginTop="8dp"
             android:background="@null"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.342"
+            app:layout_constraintHorizontal_bias="0.214"
             app:layout_constraintLeft_toRightOf="@+id/btnWrite"
             app:layout_constraintRight_toLeftOf="@+id/btnLike"
             app:layout_constraintTop_toBottomOf="@+id/imageView3"
-            app:srcCompat="@drawable/btn_ar"
-            android:layout_marginStart="47dp"
-            android:layout_marginEnd="8dp" />
+            app:layout_constraintVertical_bias="0.555"
+            app:srcCompat="@drawable/btn_ar" />
 
         <ImageButton
             android:id="@+id/btnRedirect"
@@ -156,24 +176,5 @@
             android:layout_marginEnd="8dp" />
 
     </android.support.constraint.ConstraintLayout>
-
-    <com.lorentzos.flingswipe.SwipeFlingAdapterView
-        android:id="@+id/frame"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="0dp"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
