@@ -124,6 +124,7 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
                     tempShuffledData = storage.get(curPosition);
                     adapter.notifyDataSetChanged();
                     scrolledToggle = false;
+                    Log.d("CALL",tempShuffledData.getInquiry());
                 }
             }
         });
@@ -157,8 +158,10 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
 
     @OnClick(R.id.btnRedirect)
     public void redirectButtonClicked() {
-        Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(tempShuffledData.getOrg_link()));
-        startActivity(intent);
+        if (!tempShuffledData.isFirebase()) {
+            Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(tempShuffledData.getOrg_link()));
+            startActivity(intent);
+        }
     }
 
     @OnClick(R.id.btnAR)
