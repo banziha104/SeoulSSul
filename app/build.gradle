@@ -39,7 +39,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.+'               //Gson
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-    compile 'com.facebook.android:facebook-android-sdk:4.+' // 페이스북 로그인
+    compile 'com.facebook.android:facebook-android-sdk:[4,5)' // 페이스북 로그인
 
     testCompile 'junit:junit:4.12'
 

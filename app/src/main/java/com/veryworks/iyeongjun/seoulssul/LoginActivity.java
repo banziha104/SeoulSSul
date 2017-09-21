@@ -31,6 +31,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.veryworks.iyeongjun.seoulssul.Domain.Const;
 import com.veryworks.iyeongjun.seoulssul.Util.PermissionControl;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
@@ -59,6 +60,7 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
     LoginButton loginButton;
     CallbackManager callbackManager;
     AccessToken accessToken;
+    boolean canItLogin;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
@@ -86,8 +88,7 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
         mAuth = FirebaseAuth.getInstance();
         setVideoView();
         FacebookSdk.sdkInitialize(this.getApplicationContext());
-        accessToken = AccessToken.getCurrentAccessToken();
-        callbackManager = CallbackManager.Factory.create();
+        facebookLoginButton();
     }
 
     /**
@@ -95,10 +96,12 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
      */
     @OnClick(R.id.btnFacebook)
     public void goMainWithFacebook() {
-       facebookLoginButton();
         loginButton.performClick();
+
     }
     public void facebookLoginButton(){
+        accessToken = AccessToken.getCurrentAccessToken();
+        callbackManager = CallbackManager.Factory.create();
         loginButton.setReadPermissions(Arrays.asList("public_profile", "email"));
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -107,7 +110,14 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         Log.v("result",object.toString());
-                        Log.v("result",accessToken.toString());
+                        try {
+                            Toast.makeText(LoginActivity.this, object.getString("name") + "님 페이스북으로 시작합니다", Toast.LENGTH_SHORT).show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+
                     }
                 });
 
