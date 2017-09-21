@@ -68,7 +68,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        android:id="@+id/constraintLayout">
+        android:id="@+id/constraintLayout"
+        android:layout_marginBottom="0dp">
 
         <ImageButton
             android:id="@+id/btnLike"
@@ -99,9 +100,9 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView3"
             app:layout_constraintVertical_bias="0.384"
             app:srcCompat="@drawable/btn_ar"
-            app:layout_constraintLeft_toRightOf="@+id/btnWrite"
-            android:layout_marginLeft="40dp"
-            app:layout_constraintHorizontal_bias="0.629" />
+            app:layout_constraintLeft_toRightOf="@+id/btnRedirect"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintHorizontal_bias="0.738" />
 
         <ImageButton
             android:id="@+id/btnRedirect"

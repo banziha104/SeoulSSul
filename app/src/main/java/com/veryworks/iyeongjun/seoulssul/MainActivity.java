@@ -148,16 +148,16 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
         if(event.getAction() == MotionEvent.ACTION_DOWN){
             btnCall.setImageResource(R.drawable.btn_call_click);
         }else if(event.getAction() == MotionEvent.ACTION_UP){
-            btnCall.setImageResource(R.drawable.btn_call);
-        }
-        if (!tempShuffledData.isFirebase()) {
-            Intent intent = new Intent(Intent.ACTION_DIAL);
-            intent.setData(Uri.parse("tel:" + tempShuffledData.getInquiry()));
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                return true;
+            btnCall.setImageResource(R.drawable.btn_call); if (!tempShuffledData.isFirebase()) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + tempShuffledData.getInquiry()));
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    return true;
+                }
+                startActivity(intent);
             }
-            startActivity(intent);
         }
+
         return true;
     }
 
@@ -167,10 +167,10 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
             btnRedirect.setImageResource(R.drawable.btn_redirect_click);
         }else if(event.getAction() == MotionEvent.ACTION_UP){
             btnRedirect.setImageResource(R.drawable.btn_redirect);
-        }
-        if (!tempShuffledData.isFirebase()) {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(tempShuffledData.getOrg_link()));
-            startActivity(intent);
+            if (!tempShuffledData.isFirebase()) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(tempShuffledData.getOrg_link()));
+                startActivity(intent);
+            }
         }
         return true;
     }
@@ -181,9 +181,9 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
             btnAr.setImageResource(R.drawable.btn_ar_click);
         }else if(event.getAction() == MotionEvent.ACTION_UP){
             btnAr.setImageResource(R.drawable.btn_ar);
+            Intent intent = new Intent(MainActivity.this, ARActivity.class);
+            startActivity(intent);
         }
-        Intent intent = new Intent(MainActivity.this, ARActivity.class);
-        startActivity(intent);
         return true;
     }
 
