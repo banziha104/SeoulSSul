@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.os.Debug;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -25,6 +27,7 @@ import java.util.Random;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTouch;
 import jp.wasabeef.glide.transformations.ColorFilterTransformation;
 
 import static com.veryworks.iyeongjun.seoulssul.Domain.UserData.userInstance;
@@ -66,8 +69,13 @@ public class WriteActivity extends AppCompatActivity {
                 .into(imgWriteBackground);
     }
 
-    @OnClick(R.id.imageButton)
-    public void btnWriteClicked(){
+    @OnTouch(R.id.imageButton)
+    public boolean btnWriteClicked(View v, MotionEvent event){
+        if(event.getAction() == MotionEvent.ACTION_DOWN){
+            imageButton.setImageResource(R.drawable.write_upload_btn_clcik);
+        }else if(event.getAction() == MotionEvent.ACTION_UP){
+            imageButton.setImageResource(R.drawable.write_upload_btn);
+        }
         String key = myRef.push().getKey();
         Log.d("KEY",key);
         if (editWrite.getText()+"" != null) {
@@ -85,5 +93,6 @@ public class WriteActivity extends AppCompatActivity {
         }else{
             Toast.makeText(this, "글이 입력되지 않았습니다", Toast.LENGTH_SHORT).show();
         }
+        return false;
     }
 }

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -142,35 +143,59 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
     }
 
     @OnClick(R.id.btnCall)
-    public void callButtonClicked() {
+    public boolean callButtonClicked(MotionEvent event) {
+        if(event.getAction() == MotionEvent.ACTION_DOWN){
+            btnCall.setImageResource(R.drawable.btn_call_click);
+        }else if(event.getAction() == MotionEvent.ACTION_UP){
+            btnCall.setImageResource(R.drawable.btn_call);
+        }
         if (!tempShuffledData.isFirebase()) {
             Intent intent = new Intent(Intent.ACTION_DIAL);
             intent.setData(Uri.parse("tel:" + tempShuffledData.getInquiry()));
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                return;
+                return false;
             }
             startActivity(intent);
         }
+        return false;
     }
 
     @OnClick(R.id.btnRedirect)
-    public void redirectButtonClicked() {
+    public boolean redirectButtonClicked(MotionEvent event) {
+        if(event.getAction() == MotionEvent.ACTION_DOWN){
+            btnRedirect.setImageResource(R.drawable.btn_redirect_click);
+        }else if(event.getAction() == MotionEvent.ACTION_UP){
+            btnRedirect.setImageResource(R.drawable.btn_redirect);
+        }
         if (!tempShuffledData.isFirebase()) {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(tempShuffledData.getOrg_link()));
             startActivity(intent);
         }
+        return false;
     }
 
     @OnClick(R.id.btnAr)
-    public void arButtonClicked() {
+    public boolean arButtonClicked(MotionEvent event) {
+        if(event.getAction() == MotionEvent.ACTION_DOWN){
+            btnAr.setImageResource(R.drawable.btn_ar_click);
+        }else if(event.getAction() == MotionEvent.ACTION_UP){
+            btnAr.setImageResource(R.drawable.btn_ar);
+        }
         Intent intent = new Intent(MainActivity.this, ARActivity.class);
         startActivity(intent);
+        return false;
     }
 
     @OnClick(R.id.btnWrite)
-    public void writeButtonClicked() {
+    public boolean writeButtonClicked(MotionEvent event) {
+        if(event.getAction() == MotionEvent.ACTION_DOWN){
+            btnWrite.setImageResource(R.drawable.btn_write_click);
+        }else if(event.getAction() == MotionEvent.ACTION_UP){
+            btnWrite.setImageResource(R.drawable.btn_write);
+        }
         Intent intent = new Intent(MainActivity.this, WriteActivity.class);
         startActivity(intent);
+        return false;
     }
 
     @Override
