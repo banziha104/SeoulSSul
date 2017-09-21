@@ -28,6 +28,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTouch;
 
 public class MainActivity extends AppCompatActivity implements AdapterCallback {
     List<ShuffledData> tempData;
@@ -142,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
 
     }
 
-    @OnClick(R.id.btnCall)
+    @OnTouch(R.id.btnCall)
     public boolean callButtonClicked(MotionEvent event) {
         if(event.getAction() == MotionEvent.ACTION_DOWN){
             btnCall.setImageResource(R.drawable.btn_call_click);
@@ -153,14 +154,14 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
             Intent intent = new Intent(Intent.ACTION_DIAL);
             intent.setData(Uri.parse("tel:" + tempShuffledData.getInquiry()));
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                return false;
+                return true;
             }
             startActivity(intent);
         }
-        return false;
+        return true;
     }
 
-    @OnClick(R.id.btnRedirect)
+    @OnTouch(R.id.btnRedirect)
     public boolean redirectButtonClicked(MotionEvent event) {
         if(event.getAction() == MotionEvent.ACTION_DOWN){
             btnRedirect.setImageResource(R.drawable.btn_redirect_click);
@@ -171,10 +172,10 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(tempShuffledData.getOrg_link()));
             startActivity(intent);
         }
-        return false;
+        return true;
     }
 
-    @OnClick(R.id.btnAr)
+    @OnTouch(R.id.btnAr)
     public boolean arButtonClicked(MotionEvent event) {
         if(event.getAction() == MotionEvent.ACTION_DOWN){
             btnAr.setImageResource(R.drawable.btn_ar_click);
@@ -183,19 +184,19 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
         }
         Intent intent = new Intent(MainActivity.this, ARActivity.class);
         startActivity(intent);
-        return false;
+        return true;
     }
 
-    @OnClick(R.id.btnWrite)
+    @OnTouch(R.id.btnWrite)
     public boolean writeButtonClicked(MotionEvent event) {
         if(event.getAction() == MotionEvent.ACTION_DOWN){
             btnWrite.setImageResource(R.drawable.btn_write_click);
         }else if(event.getAction() == MotionEvent.ACTION_UP){
             btnWrite.setImageResource(R.drawable.btn_write);
+            Intent intent = new Intent(MainActivity.this, WriteActivity.class);
+            startActivity(intent);
         }
-        Intent intent = new Intent(MainActivity.this, WriteActivity.class);
-        startActivity(intent);
-        return false;
+        return true;
     }
 
     @Override

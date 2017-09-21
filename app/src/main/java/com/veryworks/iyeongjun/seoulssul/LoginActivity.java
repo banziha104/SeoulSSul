@@ -95,20 +95,6 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
         facebookLoginButton();
     }
 
-    /**
-     * 페이스북 로그인 버튼
-     */
-    @OnTouch(R.id.btnFacebook)
-    public boolean goMainWithFacebook(View v, MotionEvent event) {
-        if(event.getAction() == MotionEvent.ACTION_DOWN){
-            btnFacebook.setImageResource(R.drawable.facebook_click);
-        }else if(event.getAction() == MotionEvent.ACTION_UP){
-            btnFacebook.setImageResource(R.drawable.facebook);
-        }
-        loginButton.performClick();
-        return false;
-
-    }
     public void facebookLoginButton(){
         accessToken = AccessToken.getCurrentAccessToken();
         callbackManager = CallbackManager.Factory.create();
@@ -155,6 +141,20 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
     }
 
     /**
+     * 페이스북 로그인 버튼
+     */
+    @OnTouch(R.id.btnFacebook)
+    public boolean goMainWithFacebook(View v, MotionEvent event) {
+        if(event.getAction() == MotionEvent.ACTION_DOWN){
+            btnFacebook.setImageResource(R.drawable.facebook_click);
+        }else if(event.getAction() == MotionEvent.ACTION_UP){
+            btnFacebook.setImageResource(R.drawable.facebook);
+        }
+        loginButton.performClick();
+        return true;
+
+    }
+    /**
      *
      */
     @OnTouch(R.id.btnKakao)
@@ -165,7 +165,7 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
             btnKakao.setImageResource(R.drawable.kakao);
         }
         Toast.makeText(this, "카카오 로그인은 릴리즈 버전에서만 가능", Toast.LENGTH_SHORT).show();
-        return false;
+        return true;
     }
 
     /**
@@ -182,7 +182,7 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
 
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
-        return false;
+        return true;
     }
 
     /**

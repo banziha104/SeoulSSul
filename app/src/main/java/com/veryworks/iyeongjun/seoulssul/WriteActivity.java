@@ -75,24 +75,24 @@ public class WriteActivity extends AppCompatActivity {
             imageButton.setImageResource(R.drawable.write_upload_btn_clcik);
         }else if(event.getAction() == MotionEvent.ACTION_UP){
             imageButton.setImageResource(R.drawable.write_upload_btn);
+            String key = myRef.push().getKey();
+            Log.d("KEY",key);
+            if (editWrite.getText()+"" != null) {
+                FirebaseData firebaseData = new FirebaseData(
+                        userInstance.getName()
+                        , userInstance.getImage_url()
+                        , editWrite.getText().toString()
+                        , UserLocation.currentUserLocation.getLatitude()
+                        , UserLocation.currentUserLocation.getLongitude()
+                        , UserLocation.currentUserDivision,
+                        true);
+                myRef.child(UserLocation.currentUserDivision).child(key).setValue(firebaseData);
+                Toast.makeText(this, "저장 되었습니다", Toast.LENGTH_SHORT).show();
+                finish();
+            }else{
+                Toast.makeText(this, "글이 입력되지 않았습니다", Toast.LENGTH_SHORT).show();
+            }
         }
-        String key = myRef.push().getKey();
-        Log.d("KEY",key);
-        if (editWrite.getText()+"" != null) {
-            FirebaseData firebaseData = new FirebaseData(
-                    userInstance.getName()
-                    , userInstance.getImage_url()
-                    , editWrite.getText().toString()
-                    , UserLocation.currentUserLocation.getLatitude()
-                    , UserLocation.currentUserLocation.getLongitude()
-                    , UserLocation.currentUserDivision,
-                    true);
-            myRef.child(UserLocation.currentUserDivision).child(key).setValue(firebaseData);
-            Toast.makeText(this, "저장 되었습니다", Toast.LENGTH_SHORT).show();
-            finish();
-        }else{
-            Toast.makeText(this, "글이 입력되지 않았습니다", Toast.LENGTH_SHORT).show();
-        }
-        return false;
+        return true;
     }
 }

@@ -90,18 +90,18 @@
             android:layout_height="30dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginLeft="47dp"
             android:layout_marginRight="8dp"
             android:layout_marginStart="47dp"
             android:layout_marginTop="8dp"
             android:background="@null"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.214"
-            app:layout_constraintLeft_toRightOf="@+id/btnWrite"
             app:layout_constraintRight_toLeftOf="@+id/btnLike"
             app:layout_constraintTop_toBottomOf="@+id/imageView3"
-            app:layout_constraintVertical_bias="0.555"
-            app:srcCompat="@drawable/btn_ar" />
+            app:layout_constraintVertical_bias="0.384"
+            app:srcCompat="@drawable/btn_ar"
+            app:layout_constraintLeft_toRightOf="@+id/btnWrite"
+            android:layout_marginLeft="40dp"
+            app:layout_constraintHorizontal_bias="0.629" />
 
         <ImageButton
             android:id="@+id/btnRedirect"
@@ -136,19 +136,19 @@
 
         <ImageButton
             android:id="@+id/btnWrite"
-            android:layout_width="wrap_content"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
             android:background="@null"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.523"
-            app:srcCompat="@drawable/btn_write"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp" />
+            app:srcCompat="@drawable/btn_write" />
 
         <ImageView
             android:id="@+id/imageView3"
