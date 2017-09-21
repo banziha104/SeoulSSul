@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -23,6 +25,7 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.games.event.Event;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -39,6 +42,7 @@ import java.util.Arrays;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTouch;
 
 import static com.veryworks.iyeongjun.seoulssul.Domain.UserData.userInstance;
 import static com.veryworks.iyeongjun.seoulssul.Util.PermissionControl.checkVersion;
@@ -94,9 +98,15 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
     /**
      * 페이스북 로그인 버튼
      */
-    @OnClick(R.id.btnFacebook)
-    public void goMainWithFacebook() {
+    @OnTouch(R.id.btnFacebook)
+    public boolean goMainWithFacebook(View v, MotionEvent event) {
+        if(event.getAction() == MotionEvent.ACTION_DOWN){
+            btnFacebook.setImageResource(R.drawable.facebook_click);
+        }else if(event.getAction() == MotionEvent.ACTION_UP){
+            btnFacebook.setImageResource(R.drawable.facebook);
+        }
         loginButton.performClick();
+        return false;
 
     }
     public void facebookLoginButton(){
@@ -147,20 +157,32 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
     /**
      *
      */
-    @OnClick(R.id.btnKakao)
-    public void goMainWithKakao() {
+    @OnTouch(R.id.btnKakao)
+    public boolean goMainWithKakao(MotionEvent event) {
+        if(event.getAction() == MotionEvent.ACTION_DOWN){
+            btnKakao.setImageResource(R.drawable.kakao_clcik);
+        }else if(event.getAction() == MotionEvent.ACTION_UP){
+            btnKakao.setImageResource(R.drawable.kakao);
+        }
         Toast.makeText(this, "카카오 로그인은 릴리즈 버전에서만 가능", Toast.LENGTH_SHORT).show();
+        return false;
     }
 
     /**
      *
      */
-    @OnClick(R.id.btnNextTime)
-    public void goMainWithNextTime() {
+    @OnTouch(R.id.btnNextTime)
+    public boolean goMainWithNextTime(MotionEvent event,View v) {
+        if(event.getAction() == MotionEvent.ACTION_DOWN){
+            btnNextTime.setImageResource(R.drawable.next_time_click);
+        }else if(event.getAction() == MotionEvent.ACTION_UP){
+            btnNextTime.setImageResource(R.drawable.next_time);
+        }
         guestLogin(Const.Guest.GUEST_EMAIL, Const.Guest.GUEST_PASSWORD);
 
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
+        return false;
     }
 
     /**
