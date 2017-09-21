@@ -4,7 +4,8 @@
     android:id="@+id/activity_ar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ng.dat.ar.ARActivity">
+    android:fitsSystemWindows="true"
+    tools:context="com.veryworks.iyeongjun.seoulssul.ARActivity">
 
     <FrameLayout
         android:id="@+id/camera_container_layout"
