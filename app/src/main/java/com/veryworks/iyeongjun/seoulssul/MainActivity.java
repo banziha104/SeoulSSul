@@ -80,7 +80,6 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
             tempData.add(datas.get(i));
         }
         final ArrayList<ShuffledData> storage = datas;
-        //choose your favorite adapter
         adapter = new CustomAdapter(this, R.layout.item, R.id.txtContents, tempData);
         flingContainer.setAdapter(adapter);
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {

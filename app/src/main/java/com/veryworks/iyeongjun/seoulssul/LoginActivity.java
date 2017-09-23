@@ -80,7 +80,6 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
     boolean canItLogin;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
