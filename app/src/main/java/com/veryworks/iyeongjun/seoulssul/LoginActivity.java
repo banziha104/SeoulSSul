@@ -59,7 +59,7 @@ import static com.veryworks.iyeongjun.seoulssul.Domain.UserData.userInstance;
 import static com.veryworks.iyeongjun.seoulssul.Util.PermissionControl.checkVersion;
 
 public class LoginActivity extends AppCompatActivity implements PermissionControl.CallBack {
-
+    AdapterCallback adaptercallback;
     @BindView(R.id.videoView)
     VideoView videoView;
     @BindView(R.id.btnFacebook)
