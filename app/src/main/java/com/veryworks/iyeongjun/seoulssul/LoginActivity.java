@@ -1,6 +1,9 @@
 package com.veryworks.iyeongjun.seoulssul;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInstaller;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
@@ -24,20 +27,26 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.google.android.gms.games.event.Event;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.kakao.network.ErrorResult;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.LogoutResponseCallback;
+import com.kakao.usermgmt.callback.MeResponseCallback;
+import com.kakao.usermgmt.response.model.UserProfile;
+import com.kakao.util.exception.KakaoException;
 import com.veryworks.iyeongjun.seoulssul.Domain.Const;
 import com.veryworks.iyeongjun.seoulssul.Util.PermissionControl;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import com.kakao.auth.Session;
+import com.kakao.auth.ISessionCallback;
 
 import java.util.Arrays;
 
@@ -48,7 +57,6 @@ import butterknife.OnTouch;
 
 import static com.veryworks.iyeongjun.seoulssul.Domain.UserData.userInstance;
 import static com.veryworks.iyeongjun.seoulssul.Util.PermissionControl.checkVersion;
-
 
 public class LoginActivity extends AppCompatActivity implements PermissionControl.CallBack {
 
@@ -64,8 +72,11 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
     ImageView imgLogo;
     @BindView(R.id.facebookLoginButton)
     LoginButton loginButton;
+    @BindView(R.id.kakaoLoginButton)
+    com.kakao.usermgmt.LoginButton kakaoLoginButton;
     CallbackManager callbackManager;
     AccessToken accessToken;
+    SessionCallback callback;
     boolean canItLogin;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -75,6 +86,9 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        callback = new SessionCallback();
+        Session.getCurrentSession().addCallback(callback);
+        Session.getCurrentSession().checkAndImplicitOpen();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkVersion(this);
         } else {
@@ -101,7 +115,13 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
         facebookLoginButton();
     }
 
-    public void facebookLoginButton(){
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Session.getCurrentSession().removeCallback(callback);
+    }
+
+    public void facebookLoginButton() {
         accessToken = AccessToken.getCurrentAccessToken();
         callbackManager = CallbackManager.Factory.create();
         loginButton.setReadPermissions(Arrays.asList("public_profile", "email"));
@@ -111,7 +131,7 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
                 GraphRequest graphRequest = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
-                        Log.v("result",object.toString());
+                        Log.v("result", object.toString());
                         try {
                             Toast.makeText(LoginActivity.this, object.getString("name") + "님 페이스북으로 시작합니다", Toast.LENGTH_SHORT).show();
                         } catch (JSONException e) {
@@ -119,6 +139,7 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
                         }
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
+                        finish();
 
                     }
                 });
@@ -136,10 +157,11 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
 
             @Override
             public void onError(FacebookException error) {
-                Log.e("LoginErr",error.toString());
+                Log.e("LoginErr", error.toString());
             }
         });
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -151,43 +173,75 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
      */
     @OnTouch(R.id.btnFacebook)
     public boolean goMainWithFacebook(View v, MotionEvent event) {
-        if(event.getAction() == MotionEvent.ACTION_DOWN){
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
             btnFacebook.setImageResource(R.drawable.facebook_click);
-        }else if(event.getAction() == MotionEvent.ACTION_UP){
+        } else if (event.getAction() == MotionEvent.ACTION_UP) {
             btnFacebook.setImageResource(R.drawable.facebook);
+            loginButton.performClick();
+
         }
-        loginButton.performClick();
         return true;
+    }
+    @OnClick(R.id.kakaoLoginButton)
+    public void kakaoLoginButton() {
+        UserManagement.requestMe(new MeResponseCallback() {
+            @Override
+            public void onFailure(ErrorResult errorResult) {
+                super.onFailure(errorResult);
+
+                Log.d("KAKAO",errorResult.toString());
+            }
+            @Override
+            public void onSessionClosed(ErrorResult errorResult) {
+                Log.d("KAKAO",errorResult.toString());
+            }
+
+            @Override
+            public void onNotSignedUp() {
+
+            }
+
+            @Override
+            public void onSuccess(UserProfile result) {
+                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                Log.d("KAKAO",result.toString());
+                startActivity(intent);
+                finish();
+            }
+        });
 
     }
+
     /**
      *
      */
     @OnTouch(R.id.btnKakao)
     public boolean goMainWithKakao(MotionEvent event) {
-        if(event.getAction() == MotionEvent.ACTION_DOWN){
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
             btnKakao.setImageResource(R.drawable.kakao_clcik);
-        }else if(event.getAction() == MotionEvent.ACTION_UP){
+        } else if (event.getAction() == MotionEvent.ACTION_UP) {
             btnKakao.setImageResource(R.drawable.kakao);
+            kakaoLoginButton.performClick();
         }
-        Toast.makeText(this, "카카오 로그인은 릴리즈 버전에서만 가능", Toast.LENGTH_SHORT).show();
         return true;
     }
+
 
     /**
      *
      */
     @OnTouch(R.id.btnNextTime)
-    public boolean goMainWithNextTime(MotionEvent event,View v) {
-        if(event.getAction() == MotionEvent.ACTION_DOWN){
+    public boolean goMainWithNextTime(MotionEvent event, View v) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
             btnNextTime.setImageResource(R.drawable.next_time_click);
-        }else if(event.getAction() == MotionEvent.ACTION_UP){
+        } else if (event.getAction() == MotionEvent.ACTION_UP) {
             btnNextTime.setImageResource(R.drawable.next_time);
-        }
-        guestLogin(Const.Guest.GUEST_EMAIL, Const.Guest.GUEST_PASSWORD);
 
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(intent);
+            guestLogin(Const.Guest.GUEST_EMAIL, Const.Guest.GUEST_PASSWORD);
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
         return true;
     }
 
@@ -239,4 +293,16 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
                     }
                 });
     }
+    private class SessionCallback implements ISessionCallback{
+        @Override
+        public void onSessionOpened() {
+
+        }
+
+        @Override
+        public void onSessionOpenFailed(KakaoException exception) {
+
+        }
+    }
 }
+

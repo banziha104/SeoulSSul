@@ -6,11 +6,12 @@ android {
 
     repositories {
         mavenCentral()
+        maven { url 'http://devrepo.kakao.com:8088/nexus/content/groups/public/' }
     }
 
     defaultConfig {
         applicationId "com.veryworks.iyeongjun.seoulssul"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -40,7 +41,8 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     compile 'com.facebook.android:facebook-android-sdk:[4,5)' // 페이스북 로그인
-
+    compile group: 'com.kakao.sdk', name: 'usermgmt', version : project.KAKAO_SDK_VERSION//카카오 로그인
+    compile group: 'com.kakao.sdk', name: 'kakaotalk', version: project.KAKAO_SDK_VERSION//카카오톡 sdk
     testCompile 'junit:junit:4.12'
 
 }
