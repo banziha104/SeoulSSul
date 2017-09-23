@@ -131,16 +131,13 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
                 GraphRequest graphRequest = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
-                        Log.v("result", object.toString());
+                        logForFacebook(object.toString());
                         try {
                             Toast.makeText(LoginActivity.this, object.getString("name") + "님 페이스북으로 시작합니다", Toast.LENGTH_SHORT).show();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
-
+                        redirectMainActivity();
                     }
                 });
 
@@ -157,7 +154,7 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
 
             @Override
             public void onError(FacebookException error) {
-                Log.e("LoginErr", error.toString());
+                logForFacebook(error.toString());
             }
         });
     }
@@ -182,34 +179,32 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
         }
         return true;
     }
+
     @OnClick(R.id.kakaoLoginButton)
     public void kakaoLoginButton() {
+        Toast.makeText(this, "gg", Toast.LENGTH_SHORT).show();
         UserManagement.requestMe(new MeResponseCallback() {
             @Override
             public void onFailure(ErrorResult errorResult) {
                 super.onFailure(errorResult);
-
-                Log.d("KAKAO",errorResult.toString());
+                logForKakao("Failure"+errorResult.toString());
             }
             @Override
             public void onSessionClosed(ErrorResult errorResult) {
-                Log.d("KAKAO",errorResult.toString());
+                logForKakao("SessionClosed"+errorResult.toString());
             }
 
             @Override
             public void onNotSignedUp() {
-
+                logForKakao("NotSignUp");
             }
 
             @Override
             public void onSuccess(UserProfile result) {
-                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                Log.d("KAKAO",result.toString());
-                startActivity(intent);
-                finish();
+                logForKakao("Success :" + result.toString());
+                redirectMainActivity();
             }
         });
-
     }
 
     /**
@@ -267,10 +262,10 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
-                    Log.d("Firebase", "onAuthStateChanged:signed_in:" + user.getUid());
+                    logForFirebase("onAuthStateChanged:signed_in:" + user.getUid());
                 } else {
                     // User is signed out
-                    Log.d("Firebase", "onAuthStateChanged:signed_out");
+                    logForFirebase("onAuthStateChanged:signed_out");
                 }
             }
         };
@@ -296,13 +291,41 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
     private class SessionCallback implements ISessionCallback{
         @Override
         public void onSessionOpened() {
-
+            logForKakao("Session Opened!");
+            redirectMainActivity();
         }
 
         @Override
         public void onSessionOpenFailed(KakaoException exception) {
-
+            if (exception!=null){
+                logForKakao("Session Failed"+exception);
+            }
         }
+    }
+
+    /**
+     * 사인업 액티비티로 이동
+     */
+    private void redirectSignupActivity(){
+
+    }
+
+    /**
+     * 메인액티비티로 이동
+     */
+    private void redirectMainActivity(){
+        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+    private void logForFacebook(String str){
+        Log.d("FACEBOOK",str);
+    }
+    private void logForKakao(String str){
+        Log.d("KAKAO",str);
+    }
+    private void logForFirebase(String str){
+        Log.d("Firebase",str);
     }
 }
 
