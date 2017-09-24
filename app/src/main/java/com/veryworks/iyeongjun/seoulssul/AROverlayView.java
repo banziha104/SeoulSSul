@@ -88,7 +88,4 @@ public class AROverlayView extends View {
             }
         }
     }
-    public void setFirebaseData(){
-
-    }
 }

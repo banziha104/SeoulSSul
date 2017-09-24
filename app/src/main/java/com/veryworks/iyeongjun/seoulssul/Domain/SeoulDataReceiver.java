@@ -37,7 +37,7 @@ public class SeoulDataReceiver {
     AdapterCallback adapterCallback;
     UserLocation userLocation;
     int start = 1;
-    int end = 1000;
+    int end = 100;
     public SeoulDataReceiver(Context context) {
         this.context = context;
         adapterCallback = (AdapterCallback)context;

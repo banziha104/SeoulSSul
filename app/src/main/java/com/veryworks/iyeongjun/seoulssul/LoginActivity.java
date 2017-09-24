@@ -3,7 +3,10 @@ package com.veryworks.iyeongjun.seoulssul;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageInstaller;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
@@ -34,6 +37,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.kakao.auth.AuthType;
+import com.kakao.auth.helper.Base64;
 import com.kakao.network.ErrorResult;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
@@ -41,6 +46,8 @@ import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
 import com.veryworks.iyeongjun.seoulssul.Domain.Const;
+import com.veryworks.iyeongjun.seoulssul.Domain.SeoulDataReceiver;
+import com.veryworks.iyeongjun.seoulssul.Domain.ShuffledData;
 import com.veryworks.iyeongjun.seoulssul.Util.PermissionControl;
 
 import org.json.JSONException;
@@ -48,13 +55,18 @@ import org.json.JSONObject;
 import com.kakao.auth.Session;
 import com.kakao.auth.ISessionCallback;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTouch;
 
+import static com.kakao.util.helper.Utility.getPackageInfo;
 import static com.veryworks.iyeongjun.seoulssul.Domain.UserData.userInstance;
 import static com.veryworks.iyeongjun.seoulssul.Util.PermissionControl.checkVersion;
 
@@ -80,14 +92,14 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
     boolean canItLogin;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    ArrayList<ShuffledData> datas;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        callback = new SessionCallback();
-        Session.getCurrentSession().addCallback(callback);
-        Session.getCurrentSession().checkAndImplicitOpen();
+        kakaoInit();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkVersion(this);
         } else {
@@ -95,6 +107,24 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
         }
     }
 
+    private void kakaoInit(){
+        try{
+            PackageInfo info = getPackageManager()
+                    .getPackageInfo(this.getPackageName(), PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures){
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KAKA", Base64.encodeBase64URLSafeString(md.digest()));
+            }
+            callback = new SessionCallback();
+            Session.getCurrentSession().addCallback(callback);
+            Session.getCurrentSession().checkAndImplicitOpen();
+        }catch (PackageManager.NameNotFoundException e){
+
+        }catch (NoSuchAlgorithmException e){
+
+        }
+    }
     @Override
     protected void onStart() {
         super.onStart();
@@ -182,28 +212,7 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
     @OnClick(R.id.kakaoLoginButton)
     public void kakaoLoginButton() {
         Toast.makeText(this, "gg", Toast.LENGTH_SHORT).show();
-        UserManagement.requestMe(new MeResponseCallback() {
-            @Override
-            public void onFailure(ErrorResult errorResult) {
-                super.onFailure(errorResult);
-                logForKakao("Failure"+errorResult.toString());
-            }
-            @Override
-            public void onSessionClosed(ErrorResult errorResult) {
-                logForKakao("SessionClosed"+errorResult.toString());
-            }
-
-            @Override
-            public void onNotSignedUp() {
-                logForKakao("NotSignUp");
-            }
-
-            @Override
-            public void onSuccess(UserProfile result) {
-                logForKakao("Success :" + result.toString());
-                redirectMainActivity();
-            }
-        });
+        Session.getCurrentSession().open(AuthType.KAKAO_TALK,(Activity)getApplicationContext());
     }
 
     /**
@@ -291,7 +300,7 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
         @Override
         public void onSessionOpened() {
             logForKakao("Session Opened!");
-            redirectMainActivity();
+            redirectSignupActivity();
         }
 
         @Override
@@ -306,7 +315,9 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
      * 사인업 액티비티로 이동
      */
     private void redirectSignupActivity(){
-
+        final Intent intent = new Intent(LoginActivity.this,SignUpActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     /**
@@ -326,5 +337,6 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
     private void logForFirebase(String str){
         Log.d("Firebase",str);
     }
+
 }
 
