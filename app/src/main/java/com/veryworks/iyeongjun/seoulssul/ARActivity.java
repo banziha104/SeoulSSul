@@ -69,6 +69,7 @@ public class ARActivity extends AppCompatActivity implements SensorEventListener
     @Override
     public void onPause() {
         releaseCamera();
+        sensorManager.unregisterListener(this);
         super.onPause();
     }
 
