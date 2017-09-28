@@ -19,8 +19,7 @@ import java.util.List;
 /**
  * Created by ntdat on 1/13/17.
  */
-@SuppressWarnings("deprecation")
-@TargetApi(Build.VERSION_CODES.KITKAT)
+
 public class ARCamera extends ViewGroup implements SurfaceHolder.Callback {
     private final String TAG = "ARCamera";
 
