@@ -80,12 +80,9 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
     ImageButton btnNextTime;
     @BindView(R.id.btnKakao)
     ImageButton btnKakao;
-    @BindView(R.id.imgLogo)
-    ImageView imgLogo;
-    @BindView(R.id.facebookLoginButton)
-    LoginButton loginButton;
-    @BindView(R.id.kakaoLoginButton)
-    com.kakao.usermgmt.LoginButton kakaoLoginButton;
+    @BindView(R.id.imgLogo) ImageView imgLogo;
+    @BindView(R.id.facebookLoginButton) LoginButton loginButton;
+    @BindView(R.id.kakaoLoginButton) com.kakao.usermgmt.LoginButton kakaoLoginButton;
     CallbackManager callbackManager;
     AccessToken accessToken;
     SessionCallback callback;
@@ -204,7 +201,6 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
         } else if (event.getAction() == MotionEvent.ACTION_UP) {
             btnFacebook.setImageResource(R.drawable.facebook);
             loginButton.performClick();
-
         }
         return true;
     }
