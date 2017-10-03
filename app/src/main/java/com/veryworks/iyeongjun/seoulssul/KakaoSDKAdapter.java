@@ -13,6 +13,9 @@ import com.kakao.auth.KakaoAdapter;
  * Created by iyeongjun on 2017. 9. 21..
  */
 
+/**
+ * 카카오 로그인 어댑터
+ */
 public class KakaoSDKAdapter extends KakaoAdapter {
     /**
      * Session Config에 대해서는 default값들이 존재한다.
