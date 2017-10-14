@@ -143,11 +143,16 @@ public class UserLocation {
                     .getJSONArray("address_components")
                     .getJSONObject(2)
                     .getString("short_name");
-            Log.d("LOCATION RESULT",addressCompnents.toString());
+
+            String subAddress = obj.getJSONArray("results")
+                    .getJSONObject(1)
+                    .getJSONArray("address_components")
+                    .getJSONObject(3)
+                    .getString("short_name");
+            Log.d("LOCATION RESULT","1" + addressCompnents.toString());
+            Log.d("LOCATION RESULT","2" + subAddress.toString());
             currentUserDivision = addressCompnents;
-//            JSONArray tempArr = obj.getJSONArray("results");
-//            JSONArray arr = tempArr.getJSONArray(0);
-//            JSONObject tempObj = arr.getJSONObject(1);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
