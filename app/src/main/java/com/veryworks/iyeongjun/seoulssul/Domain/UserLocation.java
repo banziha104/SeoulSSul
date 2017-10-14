@@ -138,23 +138,71 @@ public class UserLocation {
     private void getAdress(String body){
         try {
             JSONObject obj = new JSONObject(body);
+            currentUserDivision = setUserDivision(obj);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private String setUserDivision(JSONObject obj){
+        String result = "";
+        try {
             String addressCompnents = obj.getJSONArray("results")
                     .getJSONObject(1)
                     .getJSONArray("address_components")
                     .getJSONObject(2)
                     .getString("short_name");
-
             String subAddress = obj.getJSONArray("results")
                     .getJSONObject(1)
                     .getJSONArray("address_components")
                     .getJSONObject(3)
                     .getString("short_name");
-            Log.d("LOCATION RESULT","1" + addressCompnents.toString());
-            Log.d("LOCATION RESULT","2" + subAddress.toString());
-            currentUserDivision = addressCompnents;
+            String format = obj.getJSONArray("results")
+                    .getJSONObject(2)
+                    .getString("formatted_address");
+            MyDivision myDivision = isEndwithDivision(format);
+            if (addressCompnents.endsWith("구")) result = addressCompnents;
+            else if(subAddress.endsWith("구")) result = subAddress;
+            else if(myDivision.isEndwithGu()) result = myDivision.getDivision();
+            else result = "failed";
 
+            Log.d("LOCATION RESULT", "RESULT : " + result);
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+        return result;
+    }
+    private MyDivision isEndwithDivision(String str){
+        MyDivision myDivision = new MyDivision();
+        String[] strArr =str.split(" ");
+        for(String arr : strArr){
+            if(arr.endsWith("구")){
+                myDivision.setDivision(arr);
+                myDivision.setEndwithGu(true);
+            }
+        }
+        return myDivision;
+    }
+
+    class MyDivision{
+        private boolean isEndwithGu = false;
+        private String division;
+
+        public boolean isEndwithGu() {
+            return isEndwithGu;
+        }
+
+        public void setEndwithGu(boolean endwithGu) {
+            isEndwithGu = endwithGu;
+        }
+
+        public String getDivision() {
+            return division;
+        }
+
+        public void setDivision(String division) {
+            this.division = division;
         }
     }
 }
