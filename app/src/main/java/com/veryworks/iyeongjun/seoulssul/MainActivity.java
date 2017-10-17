@@ -42,20 +42,13 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("boardData");
-    @BindView(R.id.btnLike)
-    ImageButton btnLike;
-    @BindView(R.id.btnAr)
-    ImageButton btnAr;
-    @BindView(R.id.btnRedirect)
-    ImageButton btnRedirect;
-    @BindView(R.id.btnCall)
-    ImageButton btnCall;
-    @BindView(R.id.btnWrite)
-    ImageButton btnWrite;
-    @BindView(R.id.frame)
-    SwipeFlingAdapterView frame;
-    @BindView(R.id.btnMenu)
-    ImageButton btnMenu;
+    @BindView(R.id.btnLike) ImageButton btnLike;
+    @BindView(R.id.btnAr) ImageButton btnAr;
+    @BindView(R.id.btnRedirect) ImageButton btnRedirect;
+    @BindView(R.id.btnCall) ImageButton btnCall;
+    @BindView(R.id.btnWrite) ImageButton btnWrite;
+    @BindView(R.id.frame) SwipeFlingAdapterView frame;
+    @BindView(R.id.btnMenu) ImageButton btnMenu;
 
 
     @Override

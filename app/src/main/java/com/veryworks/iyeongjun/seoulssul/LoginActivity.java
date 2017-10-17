@@ -257,7 +257,6 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
                 mediaPlayer.setLooping(true);
             }
         });
-        videoView.setListener
     }
 
     private void FirebaseAuthrizater() {
