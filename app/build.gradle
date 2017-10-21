@@ -35,6 +35,7 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'       // 글라이드
     compile 'jp.wasabeef:glide-transformations:1.0.6@aar' //글라이드 트랜스폼
 
+    compile 'io.reactivex.rxjava2:rxjava:2.+'
     compile 'com.squareup.retrofit2:retrofit:2.3.+'       //레트로핏
     compile 'com.squareup.retrofit2:converter-gson:2.3.+'       //Gson 컨버터
     compile 'com.google.code.gson:gson:2.+'               //Gson

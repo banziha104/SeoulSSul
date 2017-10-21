@@ -33,5 +33,13 @@ public class Const {
         public static final int GPS_DEFAULT_RESULT = 1;
 
     }
+    public static class AR{
+        public final static int REQUEST_CAMERA_PERMISSIONS_CODE = 11;
+        public static final int REQUEST_LOCATION_PERMISSIONS_CODE = 0;
+
+        public static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0; // 10 meters
+        public static final long MIN_TIME_BW_UPDATES = 0;//1000 * 60 * 1; // 1 minute
+
+    }
 
 }

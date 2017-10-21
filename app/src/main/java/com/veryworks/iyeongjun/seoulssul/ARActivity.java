@@ -22,6 +22,11 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import static com.veryworks.iyeongjun.seoulssul.Domain.Const.AR.MIN_DISTANCE_CHANGE_FOR_UPDATES;
+import static com.veryworks.iyeongjun.seoulssul.Domain.Const.AR.MIN_TIME_BW_UPDATES;
+import static com.veryworks.iyeongjun.seoulssul.Domain.Const.AR.REQUEST_CAMERA_PERMISSIONS_CODE;
+import static com.veryworks.iyeongjun.seoulssul.Domain.Const.AR.REQUEST_LOCATION_PERMISSIONS_CODE;
+
 public class ARActivity extends AppCompatActivity implements SensorEventListener, LocationListener {
 
     final static String TAG = "ARActivity";
@@ -33,12 +38,6 @@ public class ARActivity extends AppCompatActivity implements SensorEventListener
     private TextView tvCurrentLocation;
 
     private SensorManager sensorManager;
-    private final static int REQUEST_CAMERA_PERMISSIONS_CODE = 11;
-    public static final int REQUEST_LOCATION_PERMISSIONS_CODE = 0;
-
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0; // 10 meters
-    private static final long MIN_TIME_BW_UPDATES = 0;//1000 * 60 * 1; // 1 minute
-
     private LocationManager locationManager;
     public Location location;
     boolean isGPSEnabled;
@@ -53,7 +52,6 @@ public class ARActivity extends AppCompatActivity implements SensorEventListener
         sensorManager = (SensorManager) this.getSystemService(SENSOR_SERVICE);
         cameraContainerLayout = (FrameLayout) findViewById(R.id.camera_container_layout);
         surfaceView = (SurfaceView) findViewById(R.id.surface_view);
-        tvCurrentLocation = (TextView) findViewById(R.id.tv_current_location);
         arOverlayView = new AROverlayView(this);
     }
 
@@ -246,4 +244,8 @@ public class ARActivity extends AppCompatActivity implements SensorEventListener
     public void onProviderDisabled(String s) {
 
     }
+    public interface CheckView{
+        void checkView();
+    }
+
 }
