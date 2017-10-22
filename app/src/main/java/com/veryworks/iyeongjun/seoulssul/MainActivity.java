@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
     @BindView(R.id.btnCall) ImageButton btnCall;
     @BindView(R.id.btnWrite) ImageButton btnWrite;
     @BindView(R.id.frame) SwipeFlingAdapterView frame;
-    @BindView(R.id.btnMenu) ImageButton btnMenu;
 
     List<ShuffledData> tempData;
     CustomAdapter adapter;

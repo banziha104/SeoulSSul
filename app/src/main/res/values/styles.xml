@@ -6,4 +6,6 @@
     </style>
     <style name="newTheme" parent="Theme.AppCompat.NoActionBar">
     </style>
+    <!-- inherit from the material theme -->
+    
 </resources>

@@ -148,6 +148,7 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
     protected void onDestroy() {
         super.onDestroy();
         Session.getCurrentSession().removeCallback(callback);
+        loginButton.unregisterCallback(callbackManager);
     }
 
     public void facebookLoginButton() {
@@ -255,7 +256,7 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
             videoView.setRawData(R.raw.login);
             videoView.setScalableType(ScalableType.CENTER_CROP);
             videoView.setVolume(0,0);
-            videoView.isLooping();
+            videoView.setLooping(true);
             videoView.prepare(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mediaPlayer) {
@@ -312,6 +313,7 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
         @Override
         public void onSessionOpenFailed(KakaoException exception) {
             if (exception!=null){
+                Toast.makeText(LoginActivity.this, "카카오 로그인은 릴리즈버전에서만 가능, 페이스북이나 게스트로 로그인 해주세요", Toast.LENGTH_SHORT).show();
                 logForKakao("Session Failed"+exception);
             }
         }
