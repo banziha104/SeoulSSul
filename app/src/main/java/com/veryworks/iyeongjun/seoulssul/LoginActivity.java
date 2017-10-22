@@ -54,7 +54,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import com.kakao.auth.Session;
 import com.kakao.auth.ISessionCallback;
+import com.yqritc.scalablevideoview.ScalableType;
+import com.yqritc.scalablevideoview.ScalableVideoView;
 
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -71,18 +74,15 @@ import static com.veryworks.iyeongjun.seoulssul.Domain.UserData.userInstance;
 import static com.veryworks.iyeongjun.seoulssul.Util.PermissionControl.checkVersion;
 
 public class LoginActivity extends AppCompatActivity implements PermissionControl.CallBack {
-    AdapterCallback adaptercallback;
-    @BindView(R.id.videoView)
-    VideoView videoView;
-    @BindView(R.id.btnFacebook)
-    ImageButton btnFacebook;
-    @BindView(R.id.btnNextTime)
-    ImageButton btnNextTime;
-    @BindView(R.id.btnKakao)
-    ImageButton btnKakao;
+
+    @BindView(R.id.videoView) ScalableVideoView videoView;
+    @BindView(R.id.btnFacebook) ImageButton btnFacebook;
+    @BindView(R.id.btnNextTime) ImageButton btnNextTime;
+    @BindView(R.id.btnKakao) ImageButton btnKakao;
     @BindView(R.id.imgLogo) ImageView imgLogo;
     @BindView(R.id.facebookLoginButton) LoginButton loginButton;
     @BindView(R.id.kakaoLoginButton) com.kakao.usermgmt.LoginButton kakaoLoginButton;
+
     CallbackManager callbackManager;
     AccessToken accessToken;
     SessionCallback callback;
@@ -97,6 +97,7 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         kakaoInit();
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkVersion(this);
         } else {
@@ -111,7 +112,9 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
             for (Signature signature : info.signatures){
                 MessageDigest md = MessageDigest.getInstance("SHA");
                 md.update(signature.toByteArray());
-                Log.d("KAKA", Base64.encodeBase64URLSafeString(md.digest()));
+                Base64.encodeBase64URLSafeString(md.digest());
+                Log.d("KAKA","Base64"+ Base64.encodeBase64URLSafeString(md.digest()));
+                Log.d("KAKA","Array" + signature.toByteArray());
             }
             callback = new SessionCallback();
             Session.getCurrentSession().addCallback(callback);
@@ -248,15 +251,21 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
      * Setting Video
      */
     private void setVideoView() {
-        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.login);
-        videoView.setVideoURI(uri);
-        videoView.start();
-        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mediaPlayer) {
-                mediaPlayer.setLooping(true);
-            }
-        });
+        try {
+            videoView.setRawData(R.raw.login);
+            videoView.setScalableType(ScalableType.CENTER_CROP);
+            videoView.setVolume(0,0);
+            videoView.isLooping();
+            videoView.prepare(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mediaPlayer) {
+                    videoView.start();
+                }
+            });
+        } catch (IOException e) {
+            Log.d("KAKA","not video");
+            e.printStackTrace();
+        }
     }
 
     private void FirebaseAuthrizater() {
@@ -292,6 +301,7 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
                     }
                 });
     }
+
     private class SessionCallback implements ISessionCallback{
         @Override
         public void onSessionOpened() {

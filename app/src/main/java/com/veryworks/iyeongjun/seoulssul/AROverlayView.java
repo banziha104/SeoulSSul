@@ -34,7 +34,7 @@ public class AROverlayView extends View implements ARActivity.CheckView{
     private DisplayMetrics dm = getResources().getDisplayMetrics();
     int width = dm.widthPixels;
     int height = dm.heightPixels;
-    ArrayList<Integer> arrayList = new ArrayList<>();
+    boolean[] arr;
     public AROverlayView(Context context) {
         super(context);
 
@@ -45,6 +45,7 @@ public class AROverlayView extends View implements ARActivity.CheckView{
             add(new ARPoint("Sin sa", 37.516174, 127.019510, 0));
             Log.d("Ar","Location Create");
         }};
+        arr = new boolean[arPoints.size()];
     }
 
     public void updateRotatedProjectionMatrix(float[] rotatedProjectionMatrix) {
@@ -73,7 +74,6 @@ public class AROverlayView extends View implements ARActivity.CheckView{
         paint.setTextSize(60);
 
         for (int i = 0; i < arPoints.size(); i ++) {
-            Log.d("mTAG","onDraw" + i + "/");
             float[] currentLocationInECEF = LocationHelper.WSG84toECEF(currentLocation);
             float[] pointInECEF = LocationHelper.WSG84toECEF(arPoints.get(i).getLocation());
             float[] pointInENU = LocationHelper.ECEFtoENU(currentLocation, currentLocationInECEF, pointInECEF);
@@ -90,8 +90,10 @@ public class AROverlayView extends View implements ARActivity.CheckView{
                 canvas.drawText(arPoints.get(i).getName(), x - (30 * arPoints.get(i).getName().length() / 2)
                         , y - 80, paint);
                 if(((x < (width/3)*2) && x > (width/3)*1) && ((y < (height/5)*4) && y > (height/5)*3)){
-                    arrayList.add(i);
+                    arr[i] = true;
                     Log.d("AR","x:" + x + "/y:" + y + "/width:" + width + "/height:" + height );
+                }else{
+                    arr[i] = false;
                 }
             }
         }

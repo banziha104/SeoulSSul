@@ -13,6 +13,7 @@ public class Const {
         public static final String FACEBOOK_APP_ID = "487874731592926";
         public static final String FACEBOOK_CODE ="54b8b3be4b99d2f54300e7d609a1a8b5,https://seoulssul.firebaseapp.com/__/auth/handler";
         public static final String GOOGLE_MAP_KEY ="AIzaSyChOAuUgCbADQ5vcgzOloV0J6-SloAASWk";
+        public static final String KAKAO_API_KEY = "7bb96e6dddb70dad97e62f352c848d36";
     }
     public static class DataType{
         public static final boolean SEOUL_DATA = true;

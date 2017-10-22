@@ -37,7 +37,6 @@
             android:label="@string/app_name" />
         <activity android:name=".ARActivity" />
         <activity android:name=".WriteActivity" />
-        <activity android:name=".aas" />
         <activity android:name=".SignUpActivity"></activity>
     </application>
 
