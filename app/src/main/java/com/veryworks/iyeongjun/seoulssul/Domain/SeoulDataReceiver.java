@@ -22,6 +22,8 @@ import retrofit2.http.GET;
 import retrofit2.Call;
 import retrofit2.http.Path;
 
+import static com.veryworks.iyeongjun.seoulssul.Domain.UserLocation.currentUserDivision;
+
 /**
  * Created by iyeongjun on 2017. 8. 24..
  */
@@ -37,7 +39,7 @@ public class SeoulDataReceiver {
     AdapterCallback adapterCallback;
     UserLocation userLocation;
     int start = 1;
-    int end = 100;
+    int end = 300;
     public SeoulDataReceiver(Context context) {
         this.context = context;
         adapterCallback = (AdapterCallback)context;
@@ -47,7 +49,6 @@ public class SeoulDataReceiver {
      * 서울 공공 데이터를 크롤링하는 메소드
      */
     public Row[] getSeoulData() {
-
         retrofit = new Retrofit.Builder()                   //Retrofit 객체 생성 및 BaseURL 설정
                 .baseUrl("http://openAPI.seoul.go.kr:8088")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -62,14 +63,25 @@ public class SeoulDataReceiver {
             @Override
             public void onResponse(Call<SeoulData> call, Response<SeoulData> response) {
                 ArrayList<ShuffledData> datas;
-                ShuffledData data = new ShuffledData();
-                data.getShuffledData(response.body().getSearchConcertDetailService().getRow());
-                datas = Data.shuffledData;
-                for(int i = 0 ; i < datas.size() ; i++){
-                    Log.d("Receiever",datas.get(i).getTitle());
+                ArrayList<Row> rowdatas = new ArrayList<Row>();
+                if (currentUserDivision == "failed" || currentUserDivision == null){
+                    ShuffledData data = new ShuffledData();
+                    data.getShuffledData(response.body().getSearchConcertDetailService().getRow());
+                    datas = Data.shuffledData;
+                }else {
+                    Row[] rows = response.body().getSearchConcertDetailService().getRow();
+                    for (Row row : rows) {
+                        Log.d("LOCATION","/"+row.getGCODE()+"/");
+                        if (row.getGCODE() == currentUserDivision) rowdatas.add(row);
+                    }
+                    ShuffledData data = new ShuffledData();
+                    rowdatas.toArray();
+                    data.getShuffledData(rowdatas.toArray(new Row[rowdatas.size()]));
+                    datas = Data.shuffledData;
+                    for (int i = 0; i < datas.size(); i++) {
+                        Log.d("Receiever", datas.get(i).getTitle());
+                    }
                 }
-                userLocation = new UserLocation(context);
-                userLocation.getLocation();
                 adapterCallback.callback(datas); //어뎁터 콜백 인터페이스
             }
             @Override

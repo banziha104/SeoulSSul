@@ -48,6 +48,7 @@ import com.kakao.util.exception.KakaoException;
 import com.veryworks.iyeongjun.seoulssul.Domain.Const;
 import com.veryworks.iyeongjun.seoulssul.Domain.SeoulDataReceiver;
 import com.veryworks.iyeongjun.seoulssul.Domain.ShuffledData;
+import com.veryworks.iyeongjun.seoulssul.Domain.UserLocation;
 import com.veryworks.iyeongjun.seoulssul.Util.PermissionControl;
 
 import org.json.JSONException;
@@ -90,7 +91,7 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     ArrayList<ShuffledData> datas;
-
+    UserLocation userLocation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -142,6 +143,8 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
         setVideoView();
         FacebookSdk.sdkInitialize(this.getApplicationContext());
         facebookLoginButton();
+        userLocation = new UserLocation(this);
+        userLocation.getLocation();
     }
 
     @Override

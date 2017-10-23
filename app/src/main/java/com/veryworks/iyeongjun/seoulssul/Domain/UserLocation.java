@@ -41,7 +41,6 @@ public class UserLocation {
     }
 
     public void getLocation() {
-
         LocationManager locationManager =
                 (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -162,6 +161,7 @@ public class UserLocation {
                     .getJSONObject(2)
                     .getString("formatted_address");
             MyDivision myDivision = isEndwithDivision(format);
+            Log.d("LOCATION", "1" + addressCompnents +"/2" + subAddress + "/3" + format);
             if (addressCompnents.endsWith("구")) result = addressCompnents;
             else if(subAddress.endsWith("구")) result = subAddress;
             else if(myDivision.isEndwithGu()) result = myDivision.getDivision();
