@@ -64,7 +64,8 @@ public class SeoulDataReceiver {
             public void onResponse(Call<SeoulData> call, Response<SeoulData> response) {
                 ArrayList<ShuffledData> datas;
                 ArrayList<Row> rowdatas = new ArrayList<Row>();
-                if (currentUserDivision == "failed" || currentUserDivision == null){
+//                if (currentUserDivision == "failed" || currentUserDivision == null){
+                if (true){
                     ShuffledData data = new ShuffledData();
                     data.getShuffledData(response.body().getSearchConcertDetailService().getRow());
                     datas = Data.shuffledData;

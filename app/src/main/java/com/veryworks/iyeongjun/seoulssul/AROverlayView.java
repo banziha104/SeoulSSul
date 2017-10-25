@@ -80,7 +80,7 @@ public class AROverlayView extends View implements ARActivity.CheckView{
 
             float[] cameraCoordinateVector = new float[4];
             Matrix.multiplyMV(cameraCoordinateVector, 0, rotatedProjectionMatrix, 0, pointInENU, 0);
-
+            Log.d("LOCATION",i+"");
             // cameraCoordinateVector[2] is z, that always less than 0 to display on right position
             // if z > 0, the point will display on the opposite
             if (cameraCoordinateVector[2] < 0) {
@@ -89,13 +89,28 @@ public class AROverlayView extends View implements ARActivity.CheckView{
                 canvas.drawCircle(x, y, radius, paint);
                 canvas.drawText(arPoints.get(i).getName(), x - (30 * arPoints.get(i).getName().length() / 2)
                         , y - 80, paint);
-                if(((x < (width/3)*2) && x > (width/3)*1) && ((y < (height/5)*4) && y > (height/5)*3)){
-                    arr[i] = true;
-                    Log.d("AR","x:" + x + "/y:" + y + "/width:" + width + "/height:" + height );
-                }else{
-                    arr[i] = false;
-                }
+//                if(((x < (width/3)*2) && x > (width/3)*1) && ((y < (height/5)*3) && y > (height/5)*2)){
+//                    arr[i] = true;
+//                    Log.d("AR","x:" + x + "/y:" + y + "/width:" + width + "/height:" + height );
+//                }else{
+//                    arr[i] = false;
+//                }
             }
+        }
+    }
+
+    public boolean runThread = false;
+    public void runTimer(int postion){
+        if(!runThread) {
+            runThread = true;
+            new Thread(){
+                public void run(){
+                    long start = System.currentTimeMillis();
+                    while(System.currentTimeMillis() < start + 1000){
+
+                    }
+                }
+            }.start();
         }
     }
     @Override
