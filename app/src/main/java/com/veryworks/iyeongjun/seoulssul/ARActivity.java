@@ -22,6 +22,8 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.veryworks.iyeongjun.seoulssul.Domain.UserLocation;
+
 import static com.veryworks.iyeongjun.seoulssul.Domain.Const.AR.MIN_DISTANCE_CHANGE_FOR_UPDATES;
 import static com.veryworks.iyeongjun.seoulssul.Domain.Const.AR.MIN_TIME_BW_UPDATES;
 import static com.veryworks.iyeongjun.seoulssul.Domain.Const.AR.REQUEST_CAMERA_PERMISSIONS_CODE;
@@ -214,6 +216,7 @@ public class ARActivity extends AppCompatActivity implements SensorEventListener
                 }
             }
         } catch (Exception ex)  {
+            Log.d("AR", ex.toString());
             Log.e(TAG, ex.getMessage());
 
         }
@@ -221,7 +224,7 @@ public class ARActivity extends AppCompatActivity implements SensorEventListener
 
     private void updateLatestLocation() {
         if (arOverlayView !=null) {
-            arOverlayView.updateCurrentLocation(location);
+            arOverlayView.updateCurrentLocation(UserLocation.currentUserLocation);
         }
     }
 

@@ -10,6 +10,8 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
+import android.widget.Toast;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
@@ -53,7 +55,7 @@ public class UserLocation {
         }
 
         if (!isNetworkEnabled && !isGPSEnabled)    {
-            // cannot get location
+            Toast.makeText(context, "사용할 수 없습니다"+isGPSEnabled +"/" +isGPSEnabled, Toast.LENGTH_SHORT).show();
             locationServiceEnabled = false;
         }
         if(isNetworkEnabled){

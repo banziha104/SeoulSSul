@@ -11,14 +11,16 @@ import android.opengl.Matrix;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.veryworks.iyeongjun.seoulssul.Domain.ARPoint;
 import com.veryworks.iyeongjun.seoulssul.helper.LocationHelper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Handler;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 /**
@@ -35,17 +37,22 @@ public class AROverlayView extends View implements ARActivity.CheckView{
     int width = dm.widthPixels;
     int height = dm.heightPixels;
     boolean[] arr;
+    boolean[] temparr;
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference("boardData");
+
     public AROverlayView(Context context) {
         super(context);
 
         this.context = context;
-
         //Demo points
         arPoints = new ArrayList<ARPoint>() {{
             add(new ARPoint("Sin sa", 37.516174, 127.019510, 0));
             Log.d("Ar","Location Create");
         }};
         arr = new boolean[arPoints.size()];
+
     }
 
     public void updateRotatedProjectionMatrix(float[] rotatedProjectionMatrix) {
@@ -61,7 +68,6 @@ public class AROverlayView extends View implements ARActivity.CheckView{
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
         if (currentLocation == null) {
             return;
         }
@@ -80,7 +86,6 @@ public class AROverlayView extends View implements ARActivity.CheckView{
 
             float[] cameraCoordinateVector = new float[4];
             Matrix.multiplyMV(cameraCoordinateVector, 0, rotatedProjectionMatrix, 0, pointInENU, 0);
-            Log.d("LOCATION",i+"");
             // cameraCoordinateVector[2] is z, that always less than 0 to display on right position
             // if z > 0, the point will display on the opposite
             if (cameraCoordinateVector[2] < 0) {
@@ -89,32 +94,38 @@ public class AROverlayView extends View implements ARActivity.CheckView{
                 canvas.drawCircle(x, y, radius, paint);
                 canvas.drawText(arPoints.get(i).getName(), x - (30 * arPoints.get(i).getName().length() / 2)
                         , y - 80, paint);
-//                if(((x < (width/3)*2) && x > (width/3)*1) && ((y < (height/5)*3) && y > (height/5)*2)){
-//                    arr[i] = true;
-//                    Log.d("AR","x:" + x + "/y:" + y + "/width:" + width + "/height:" + height );
-//                }else{
-//                    arr[i] = false;
-//                }
-            }
-        }
-    }
-
-    public boolean runThread = false;
-    public void runTimer(int postion){
-        if(!runThread) {
-            runThread = true;
-            new Thread(){
-                public void run(){
-                    long start = System.currentTimeMillis();
-                    while(System.currentTimeMillis() < start + 1000){
-
-                    }
+                if(((x < (width/3)*2) && x > (width/3)*1) && ((y < (height/5)*3) && y > (height/5)*2)){
+                    arr[i] = true;
+                    Log.d("AR","x:" + x + "/y:" + y + "/width:" + width + "/height:" + height );
+                }else{
+                    arr[i] = false;
                 }
-            }.start();
+            }
         }
     }
     @Override
     public void checkView() {
 
     }
+    private void setTimer(){
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                for (int i = 0 ; i < arr.length ; i ++){
+                    if(temparr == null){
+                        temparr[i] = arr[i];
+                    }else{
+                        if(arr[i] && temparr[i]){
+                            Intent intent = new Intent(context,DetailActivity.class);
+                            context.startActivity(intent);
+                        }
+                        temparr[i] = arr[i];
+                    }
+                }
+            }
+        },1000);
+    }
+
+
 }

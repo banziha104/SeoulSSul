@@ -104,6 +104,15 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
         } else {
             init();
         }
+        ButterKnife.bind(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window w = getWindow(); // in Activity's onCreate() for instance
+            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
+        mAuth = FirebaseAuth.getInstance();
+        setVideoView();
+        FacebookSdk.sdkInitialize(this.getApplicationContext());
+        facebookLoginButton();
     }
 
     private void kakaoInit(){
@@ -134,17 +143,13 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
 
     @Override
     public void init() {
-        ButterKnife.bind(this);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Window w = getWindow(); // in Activity's onCreate() for instance
-            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        }
-        mAuth = FirebaseAuth.getInstance();
-        setVideoView();
-        FacebookSdk.sdkInitialize(this.getApplicationContext());
-        facebookLoginButton();
+
+    }
+
+    private void getLocation(){
         userLocation = new UserLocation(this);
         userLocation.getLocation();
+        Log.d("LOCATION","get location");
     }
 
     @Override
@@ -173,7 +178,6 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
                         redirectMainActivity();
                     }
                 });
-
                 Bundle parameters = new Bundle();
                 parameters.putString("fields", "id,name,email,gender,birthday");
                 graphRequest.setParameters(parameters);
@@ -206,6 +210,7 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             btnFacebook.setImageResource(R.drawable.facebook_click);
         } else if (event.getAction() == MotionEvent.ACTION_UP) {
+            getLocation();
             btnFacebook.setImageResource(R.drawable.facebook);
             loginButton.performClick();
         }
@@ -214,8 +219,7 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
 
     @OnClick(R.id.kakaoLoginButton)
     public void kakaoLoginButton() {
-        Toast.makeText(this, "gg", Toast.LENGTH_SHORT).show();
-        Session.getCurrentSession().open(AuthType.KAKAO_TALK,(Activity)getApplicationContext());
+        Session.getCurrentSession().open(AuthType.KAKAO_ACCOUNT,(Activity)getApplicationContext());
     }
 
     /**
@@ -241,8 +245,8 @@ public class LoginActivity extends AppCompatActivity implements PermissionContro
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             btnNextTime.setImageResource(R.drawable.next_time_click);
         } else if (event.getAction() == MotionEvent.ACTION_UP) {
+            getLocation();
             btnNextTime.setImageResource(R.drawable.next_time);
-
             guestLogin(Const.Guest.GUEST_EMAIL, Const.Guest.GUEST_PASSWORD);
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);

@@ -37,7 +37,8 @@
             android:label="@string/app_name" />
         <activity android:name=".ARActivity" />
         <activity android:name=".WriteActivity" />
-        <activity android:name=".SignUpActivity"></activity>
+        <activity android:name=".SignUpActivity" />
+        <activity android:name=".DetailActivity"></activity>
     </application>
 
 </manifest>
