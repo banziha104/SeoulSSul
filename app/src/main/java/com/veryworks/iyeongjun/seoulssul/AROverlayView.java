@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.location.Location;
 import android.opengl.Matrix;
+import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -28,8 +29,8 @@ import java.util.TimerTask;
  */
 
 public class AROverlayView extends View implements ARActivity.CheckView{
-
-    Context context;
+    boolean isRedirected = false;
+    AppCompatActivity context;
     private float[] rotatedProjectionMatrix = new float[16];
     private Location currentLocation;
     private List<ARPoint> arPoints;
@@ -44,16 +45,19 @@ public class AROverlayView extends View implements ARActivity.CheckView{
 
     public AROverlayView(Context context) {
         super(context);
-
-        this.context = context;
+        isRedirected = false;
+        this.context = (AppCompatActivity)context;
         //Demo points
         arPoints = new ArrayList<ARPoint>() {{
             add(new ARPoint("Sin sa", 37.516174, 127.019510, 0));
             Log.d("Ar","Location Create");
         }};
         arr = new boolean[arPoints.size()];
-
+        temparr = new boolean[arPoints.size()];
+        for(boolean bool : temparr) bool = false;
+        setTimer();
     }
+
 
     public void updateRotatedProjectionMatrix(float[] rotatedProjectionMatrix) {
         this.rotatedProjectionMatrix = rotatedProjectionMatrix;
@@ -112,20 +116,20 @@ public class AROverlayView extends View implements ARActivity.CheckView{
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
+                Log.d("LOCATION","timetask");
                 for (int i = 0 ; i < arr.length ; i ++){
-                    if(temparr == null){
-                        temparr[i] = arr[i];
-                    }else{
-                        if(arr[i] && temparr[i]){
+
+                    if(arr[i] && temparr[i]){
+                        if (!isRedirected) {
                             Intent intent = new Intent(context,DetailActivity.class);
                             context.startActivity(intent);
+                            context.finish();
+                            isRedirected = true;
                         }
+                    }
                         temparr[i] = arr[i];
                     }
                 }
-            }
-        },1000);
+        },0,1000);
     }
-
-
 }

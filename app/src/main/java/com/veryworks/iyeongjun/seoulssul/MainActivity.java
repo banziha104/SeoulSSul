@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
     ShuffledData tempShuffledData = new ShuffledData();
     int curPosition = 1;
     boolean scrolledToggle = true;
-
+    boolean likeToggle = false;
     SwipeFlingAdapterView flingContainer;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -191,7 +191,16 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
         }
         return true;
     }
-
+    @OnClick(R.id.btnLike)
+    public void likeButtonClicked() {
+        if (!likeToggle){
+            btnLike.setImageResource(R.drawable.btn_like_c_lcik);
+            likeToggle = true;
+        }else{
+            btnLike.setImageResource(R.drawable.btn_like);
+            likeToggle = false;
+        }
+    }
     @Override
     public void onBackPressed() {
         // 뒤로가기 막기

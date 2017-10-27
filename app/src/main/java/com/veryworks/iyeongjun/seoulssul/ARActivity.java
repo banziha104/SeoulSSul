@@ -170,6 +170,7 @@ public class ARActivity extends AppCompatActivity implements SensorEventListener
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
         //do nothing
+
     }
 
     private void initLocationService() {
