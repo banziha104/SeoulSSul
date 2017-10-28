@@ -52,6 +52,7 @@ public class ShuffledData {
             Log.d("Shuffled",Data.shuffledData.get(i).getTitle());
         }
     }
+
     /**
      * 서울 데이터를 셔플데이터로 변환
      * @param row

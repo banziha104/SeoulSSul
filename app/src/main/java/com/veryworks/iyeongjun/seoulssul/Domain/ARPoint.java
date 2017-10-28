@@ -9,7 +9,6 @@ import android.location.Location;
 public class ARPoint {
     Location location;
     String name;
-
     public ARPoint(String name, double lat, double lon, double altitude) {
         this.name = name;
         location = new Location("ARPoint");

@@ -13,9 +13,13 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.veryworks.iyeongjun.seoulssul.Domain.ARPoint;
+import com.veryworks.iyeongjun.seoulssul.Domain.TempFirebaseDatabase;
 import com.veryworks.iyeongjun.seoulssul.helper.LocationHelper;
 
 import java.util.ArrayList;
@@ -40,9 +44,6 @@ public class AROverlayView extends View implements ARActivity.CheckView{
     boolean[] arr;
     boolean[] temparr;
 
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("boardData");
-
     public AROverlayView(Context context) {
         super(context);
         isRedirected = false;
@@ -56,6 +57,7 @@ public class AROverlayView extends View implements ARActivity.CheckView{
         temparr = new boolean[arPoints.size()];
         for(boolean bool : temparr) bool = false;
         setTimer();
+        getFirebaseKey();
     }
 
 
@@ -98,6 +100,8 @@ public class AROverlayView extends View implements ARActivity.CheckView{
                 canvas.drawCircle(x, y, radius, paint);
                 canvas.drawText(arPoints.get(i).getName(), x - (30 * arPoints.get(i).getName().length() / 2)
                         , y - 80, paint);
+                canvas.drawText(arPoints.get(i).getName(), x - (30 * arPoints.get(i).getName().length() / 2)
+                        , y + 80, paint);
                 if(((x < (width/3)*2) && x > (width/3)*1) && ((y < (height/5)*3) && y > (height/5)*2)){
                     arr[i] = true;
                     Log.d("AR","x:" + x + "/y:" + y + "/width:" + width + "/height:" + height );
@@ -131,5 +135,44 @@ public class AROverlayView extends View implements ARActivity.CheckView{
                     }
                 }
         },0,1000);
+    }
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference("boardData");
+    ArrayList<TempFirebaseDatabase> firebaseList = new ArrayList<>();
+    private void getFirebaseKey(){
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                TempFirebaseDatabase firebaseData;
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    getFirebaseData(snapshot.getKey());
+//                    String key = snapshot.getKey();
+//                    firebaseData = snapshot.child(key).getValue(TempFirebaseDatabase.class);
+//                    firebaseList.add(firebaseData);
+//                    Log.d("Mylok",firebaseData.section.toString()+firebaseData.locationLat);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        myRef.addListenerForSingleValueEvent(valueEventListener);
+    }
+    private void getFirebaseData(String key){
+        myRef.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                TempFirebaseDatabase data = dataSnapshot.getValue(TempFirebaseDatabase.class);
+                Log.d("Mylok",data.locationLat+data.title);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }

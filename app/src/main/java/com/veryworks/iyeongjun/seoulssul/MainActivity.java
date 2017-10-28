@@ -14,16 +14,23 @@ import android.view.MotionEvent;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import com.tsengvn.typekit.Typekit;
 import com.tsengvn.typekit.TypekitContextWrapper;
+import com.veryworks.iyeongjun.seoulssul.Domain.FirebaseData;
+import com.veryworks.iyeongjun.seoulssul.Domain.KeyData;
 import com.veryworks.iyeongjun.seoulssul.Domain.SeoulDataReceiver;
 import com.veryworks.iyeongjun.seoulssul.Domain.ShuffledData;
+import com.veryworks.iyeongjun.seoulssul.Domain.TempFirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,10 +53,6 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
     boolean scrolledToggle = true;
     boolean likeToggle = false;
     SwipeFlingAdapterView flingContainer;
-
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("boardData");
-
 
 
     @Override

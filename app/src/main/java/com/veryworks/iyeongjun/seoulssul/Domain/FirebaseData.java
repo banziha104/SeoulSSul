@@ -9,6 +9,7 @@ public class FirebaseData {
     private String userImg;
     private String contents;
     private String objectID;
+    private String title;
     private double locationLat = 0.0;
     private double locationLong = 0.0;
     private String section = null;
@@ -17,14 +18,23 @@ public class FirebaseData {
     public FirebaseData() {
     }
 
-    public FirebaseData(String userName, String userImg, String contents,  double locationLat, double locationLong, String section, boolean isFirebase) {
+    public FirebaseData(String userName, String userImg, String contents,String title,  double locationLat, double locationLong, String section, boolean isFirebase) {
         this.userName = userName;
         this.userImg = userImg;
         this.contents = contents;
+        this.title = title;
         this.locationLat = locationLat;
         this.locationLong = locationLong;
         this.section = section;
         this.isFirebase = isFirebase;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getUserName() {
