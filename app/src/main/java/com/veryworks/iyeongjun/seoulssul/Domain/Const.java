@@ -41,6 +41,8 @@ public class Const {
         public static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0; // 10 meters
         public static final long MIN_TIME_BW_UPDATES = 0;//1000 * 60 * 1; // 1 minute
 
+        public static final boolean IN_IMAGE = true;
+        public static final boolean OUT_IMAGE = false;
     }
 
 }

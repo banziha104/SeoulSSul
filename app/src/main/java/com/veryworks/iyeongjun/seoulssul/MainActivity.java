@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
         flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
         tempData = new ArrayList<>();
         receiver.getSeoulData();
+        getFirebaseKey();
     }
 
     @Override
@@ -207,5 +208,39 @@ public class MainActivity extends AppCompatActivity implements AdapterCallback {
     @Override
     public void onBackPressed() {
         // 뒤로가기 막기
+    }
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference("boardData");
+    public static ArrayList<TempFirebaseDatabase> firebaseList = new ArrayList<>();
+    private void getFirebaseKey(){
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    getFirebaseData(snapshot.getKey());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        myRef.addListenerForSingleValueEvent(valueEventListener);
+    }
+    private void getFirebaseData(String key){
+        myRef.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                TempFirebaseDatabase data = dataSnapshot.getValue(TempFirebaseDatabase.class);
+                firebaseList.add(data);
+                Log.d("Mylok",data.locationLat+data.title);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }

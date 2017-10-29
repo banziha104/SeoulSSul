@@ -19,19 +19,26 @@ import android.util.Log;
 import android.view.SurfaceView;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.veryworks.iyeongjun.seoulssul.Domain.UserLocation;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 import static com.veryworks.iyeongjun.seoulssul.Domain.Const.AR.MIN_DISTANCE_CHANGE_FOR_UPDATES;
 import static com.veryworks.iyeongjun.seoulssul.Domain.Const.AR.MIN_TIME_BW_UPDATES;
 import static com.veryworks.iyeongjun.seoulssul.Domain.Const.AR.REQUEST_CAMERA_PERMISSIONS_CODE;
 import static com.veryworks.iyeongjun.seoulssul.Domain.Const.AR.REQUEST_LOCATION_PERMISSIONS_CODE;
 
-public class ARActivity extends AppCompatActivity implements SensorEventListener, LocationListener {
+public class ARActivity extends AppCompatActivity implements SensorEventListener, LocationListener, ImageSet {
 
     final static String TAG = "ARActivity";
+    @BindView(R.id.imgAR)
+    ImageView imgAR;
     private SurfaceView surfaceView;
     private FrameLayout cameraContainerLayout;
     private AROverlayView arOverlayView;
@@ -50,6 +57,7 @@ public class ARActivity extends AppCompatActivity implements SensorEventListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ar);
+        ButterKnife.bind(this);
 
         sensorManager = (SensorManager) this.getSystemService(SENSOR_SERVICE);
         cameraContainerLayout = (FrameLayout) findViewById(R.id.camera_container_layout);
@@ -114,12 +122,12 @@ public class ARActivity extends AppCompatActivity implements SensorEventListener
 
     private void initCamera() {
         int numCams = Camera.getNumberOfCameras();
-        if(numCams > 0){
-            try{
+        if (numCams > 0) {
+            try {
                 camera = Camera.open();
                 camera.startPreview();
                 arCamera.setCamera(camera);
-            } catch (RuntimeException ex){
+            } catch (RuntimeException ex) {
                 Toast.makeText(this, "Camera not found", Toast.LENGTH_LONG).show();
             }
         }
@@ -134,7 +142,7 @@ public class ARActivity extends AppCompatActivity implements SensorEventListener
     }
 
     private void releaseCamera() {
-        if(camera != null) {
+        if (camera != null) {
             camera.setPreviewCallback(null);
             camera.stopPreview();
             arCamera.setCamera(null);
@@ -175,19 +183,19 @@ public class ARActivity extends AppCompatActivity implements SensorEventListener
 
     private void initLocationService() {
 
-        if ( Build.VERSION.SDK_INT >= 23 &&
-                ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED) {
-            return  ;
+        if (Build.VERSION.SDK_INT >= 23 &&
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
         }
 
-        try   {
+        try {
             this.locationManager = (LocationManager) this.getSystemService(this.LOCATION_SERVICE);
 
             // Get GPS and network status
             this.isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
             this.isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
-            if (!isNetworkEnabled && !isGPSEnabled)    {
+            if (!isNetworkEnabled && !isGPSEnabled) {
                 // cannot get location
                 this.locationServiceAvailable = false;
             }
@@ -200,23 +208,23 @@ public class ARActivity extends AppCompatActivity implements SensorEventListener
                         MIN_TIME_BW_UPDATES,
                         MIN_DISTANCE_CHANGE_FOR_UPDATES,
                         this);
-                if (locationManager != null)   {
+                if (locationManager != null) {
                     location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                     updateLatestLocation();
                 }
             }
 
-            if (isGPSEnabled)  {
+            if (isGPSEnabled) {
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
                         MIN_TIME_BW_UPDATES,
                         MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
 
-                if (locationManager != null)  {
+                if (locationManager != null) {
                     location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                     updateLatestLocation();
                 }
             }
-        } catch (Exception ex)  {
+        } catch (Exception ex) {
             Log.d("AR", ex.toString());
             Log.e(TAG, ex.getMessage());
 
@@ -224,7 +232,7 @@ public class ARActivity extends AppCompatActivity implements SensorEventListener
     }
 
     private void updateLatestLocation() {
-        if (arOverlayView !=null) {
+        if (arOverlayView != null) {
             arOverlayView.updateCurrentLocation(UserLocation.currentUserLocation);
         }
     }
@@ -248,7 +256,22 @@ public class ARActivity extends AppCompatActivity implements SensorEventListener
     public void onProviderDisabled(String s) {
 
     }
-    public interface CheckView{
+
+    @Override
+    public void setInImage() {
+        Glide.with(this)
+                .load(R.drawable.target_in)
+                .into(imgAR);
+    }
+
+    @Override
+    public void setOutImage() {
+        Glide.with(this)
+                .load(R.drawable.target)
+                .into(imgAR);
+    }
+
+    public interface CheckView {
         void checkView();
     }
 

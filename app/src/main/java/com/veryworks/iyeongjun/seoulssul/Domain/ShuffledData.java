@@ -68,6 +68,7 @@ public class ShuffledData {
         data.setContents(mergeSeoulData(row[index]));
         data.setInquiry(row[index].getINQUIRY());
         data.setFirebase(false);
+        Log.d("Merge",row[index].getTITLE()+'\n'+mergeSeoulData(row[index]));
         Data.shuffledData.add(data);
     }
 
