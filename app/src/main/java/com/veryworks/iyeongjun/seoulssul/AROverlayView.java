@@ -147,6 +147,7 @@ public class AROverlayView extends View implements ARActivity.CheckView{
                     if(arr[i] && temparr[i]){
                         if (!isRedirected) {
                             Intent intent = new Intent(context,DetailActivity.class);
+                            intent.putExtra("position",i);
                             context.startActivity(intent);
                             context.finish();
                             isRedirected = true;
@@ -168,6 +169,6 @@ public class AROverlayView extends View implements ARActivity.CheckView{
         }
     }
     private double getDistance(Location location){
-        return ((int)(currentLocation.distanceTo(location)))/(1000);
+        return ((int)(currentLocation.distanceTo(location)))/(1000.0);
     }
 }

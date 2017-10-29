@@ -17,7 +17,7 @@ public class Const {
     }
     public static class DataType{
         public static final boolean SEOUL_DATA = true;
-        public static final boolean USER_DATA = false;
+        public static final boolean FIREBASE_DATA = false;
     }
     public static class Num{
         public static final int NEXT_PAGE = 100;
